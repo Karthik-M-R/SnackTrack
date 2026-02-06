@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #fff7ed; /* Very light orange/white blend */
+  color: #1a202c;
+  overflow-x: hidden;
+  opacity: 0;
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fintech-Food Pattern Background */
+.mesh-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  /* Light Mesh Gradient: White to Soft Orange */
+  background-color: #ffffff;
+  background-image: 
+    /* The subtle icon pattern overlay */
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23f97316' stroke-width='1.5' stroke-opacity='0.12'%3E%3C!-- Samosa/Triangle --%3E%3Cpath d='M10 10 L5 20 H15 Z' /%3E%3C!-- Rupee/Money --%3E%3Cpath d='M35 10 H45 M35 14 H45 M35 10 C35 18 31 18 31 18 L41 24' /%3E%3C!-- Trending Up Arrow --%3E%3Cpath d='M10 40 L16 34 L22 40 L34 28' /%3E%3Cpath d='M28 28 H34 V34' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+    /* Mesh Gradients */
+    radial-gradient(at 0% 0%, hsla(32, 100%, 85%, 0.25) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(0, 0%, 100%, 1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(28, 100%, 88%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(0, 100%, 100%, 0.5) 0px, transparent 50%);
+  background-size: 60px 60px, 100% 100%, 100% 100%, 100% 100%, 100% 100%; 
+  /* Note: background-size corresponds to the layers: pattern, then gradients */
+}
