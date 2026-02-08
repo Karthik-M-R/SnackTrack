@@ -1,23 +1,32 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import './App.css'
-import Navbar from './components/Navbar.jsx'
-import Dashboard from './pages/Dashboard.jsx'
-import Billing from './pages/Billing.jsx'
-import Orders from './pages/Orders.jsx'
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
+import Billing from "./pages/Billing";
+import Orders from "./pages/Orders";
 
 function App() {
+  const [orders, setOrders] = useState([]);
+
   return (
     <>
-      <div className="mesh-background" />
       <Navbar />
       <Routes>
-        <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/billing' element={<Billing />} />
-        <Route path='/orders' element={<Orders />} />
+        <Route
+          path="/billing"
+          element={<Billing orders={orders} setOrders={setOrders} />}
+        />
+        <Route
+          path="/orders"
+          element={<Orders orders={orders} setOrders={setOrders} />}
+        />
+        <Route
+          path="/dashboard"
+          element={<Dashboard orders={orders} />}
+        />
       </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

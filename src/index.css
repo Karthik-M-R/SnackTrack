@@ -3,19 +3,19 @@
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #fff7ed; /* Very light orange/white blend */
+  background-color: #ffffff;
   color: #1a202c;
   overflow-x: hidden;
   opacity: 0;
-  animation: fadeIn 1.2s ease-out forwards;
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* Fintech-Food Pattern Background */
+/* Professional POS Structured Background */
 .mesh-background {
   position: fixed;
   top: 0;
@@ -23,16 +23,50 @@ body {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  /* Light Mesh Gradient: White to Soft Orange */
   background-color: #ffffff;
+  
   background-image: 
-    /* The subtle icon pattern overlay */
-    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23f97316' stroke-width='1.5' stroke-opacity='0.12'%3E%3C!-- Samosa/Triangle --%3E%3Cpath d='M10 10 L5 20 H15 Z' /%3E%3C!-- Rupee/Money --%3E%3Cpath d='M35 10 H45 M35 14 H45 M35 10 C35 18 31 18 31 18 L41 24' /%3E%3C!-- Trending Up Arrow --%3E%3Cpath d='M10 40 L16 34 L22 40 L34 28' /%3E%3Cpath d='M28 28 H34 V34' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-    /* Mesh Gradients */
-    radial-gradient(at 0% 0%, hsla(32, 100%, 85%, 0.25) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(0, 0%, 100%, 1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(28, 100%, 88%, 0.15) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, hsla(0, 100%, 100%, 0.5) 0px, transparent 50%);
-  background-size: 60px 60px, 100% 100%, 100% 100%, 100% 100%, 100% 100%; 
-  /* Note: background-size corresponds to the layers: pattern, then gradients */
+    /* Layer 1: The Blueprint Grid (Fixed) */
+    radial-gradient(rgba(148, 163, 184, 0.25) 1px, transparent 1px),
+    
+    /* Layer 2: Soft Orange Glow (Top Left) */
+    radial-gradient(circle at 0% 0%, #fff7ed 0%, transparent 60%),
+    
+    /* Layer 3: Cool Slate Glow (Top Right) */
+    radial-gradient(circle at 100% 0%, #f8fafc 0%, transparent 60%),
+    
+    /* Layer 4: Soft Orange Glow (Bottom Right) */
+    radial-gradient(circle at 100% 100%, #fff7ed 0%, transparent 60%),
+
+    /* Layer 5: Cool Slate Glow (Bottom Left) */
+    radial-gradient(circle at 0% 100%, #f8fafc 0%, transparent 60%);
+
+  background-size: 
+    40px 40px, /* Grid Spacing */
+    100% 100%, 
+    100% 100%, 
+    100% 100%, 
+    100% 100%;
+    
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+}
+
+/* Add a slow breathing animation to the background via pseudo-element */
+.mesh-background::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg at 50% 50%, #ffffff 0deg, #fff7ed 120deg, #f8fafc 240deg, #ffffff 360deg);
+  filter: blur(100px);
+  opacity: 0.15;
+  z-index: -2;
+  animation: mesh-rotate 60s linear infinite;
+}
+
+@keyframes mesh-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
