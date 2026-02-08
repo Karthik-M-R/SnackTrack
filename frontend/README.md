@@ -1,16 +1,47 @@
-# React + Vite
+🚀 Project Overview: SnackTrack
+SnackTrack is a specialized Point of Sale (POS) and business intelligence tool designed to streamline operations for small-scale retail food outlets. It moves beyond simple paper-billing by digitizing the entire order lifecycle—from item selection to payment tracking and growth analysis.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🛑 The Problem
+Small snack shop owners often face three major challenges:
 
-Currently, two official plugins are available:
+Revenue Leakage: Orders are placed, but in a rush, it’s hard to track who has paid and who is still eating.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Lack of Insights: Business owners don't know exactly which snacks are their "best-sellers" or how their daily revenue is growing.
 
-## React Compiler
+Manual Reporting: Calculating the day's profit at night is a manual, error-prone task.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+✅ The Solution
+SnackTrack solves these by providing:
 
-## Expanding the ESLint configuration
+High-Speed POS Interface: A grid-based UI that allows for 2-click billing.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Order Lifecycle Management: An "Order Queue" that keeps track of unpaid bills until a "Payment Done" confirmation is triggered.
+
+Automated Analytics: Instant visualization of earnings and product performance through interactive charts.
+
+Telegram Integration: Automated daily sales summaries sent directly to the owner's phone.
+
+🛠️ The Technical Flow
+1. The Billing Engine (Frontend Logic)
+User selects items from a dynamic grid.
+
+State is managed locally using React Hooks, calculating subtotals and taxes (GST) in real-time.
+
+When "Place Order" is clicked, a new document is created in the database with a status: "Pending".
+
+2. The Order Queue (State Transition)
+The system displays a list of active orders.
+
+The owner can toggle the "Payment Done" status, which transitions the order from Pending to Completed.
+
+This ensures that only actually paid money is reflected in the business graphs.
+
+3. Data Visualization (The Dashboard)
+The system aggregates data from the MongoDB collections.
+
+Recharts is used to plot daily earnings and category-wise sales (Pie Charts), allowing the owner to make data-driven decisions on stock.
+
+4. Automated Reporting (The Backend Task)
+A Node-Cron job runs a daily script at the shop’s closing time.
+
+It calculates the day's "Paid" total and sends a formatted message to the owner via the Telegram Bot API.

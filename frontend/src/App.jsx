@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Dashboard from "./pages/Dashboard";
 import Billing from "./pages/Billing";
 import Orders from "./pages/Orders";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const [orders, setOrders] = useState([]);
@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route
           path="/billing"
-          element={<Billing orders={orders} setOrders={setOrders} />}
+          element={<Billing setOrders={setOrders} />}
         />
         <Route
           path="/orders"

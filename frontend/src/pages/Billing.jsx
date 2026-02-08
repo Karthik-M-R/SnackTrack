@@ -1,11 +1,13 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { snacks } from "../data/snacks";
 import SnackCard from "../components/SnackCard";
 import BillSummary from "../components/BillSummary";
 
 
-function Billing() {
+function Billing({ setOrders }) {
+  const navigate = useNavigate();
   const [quantities, setQuantities] = useState({});
 
   const handleQuantityChange = (snackId, qty) => {
@@ -22,21 +24,26 @@ function Billing() {
   const handleCreateOrder = () => {
     if (subtotal === 0) return;
 
+    const orderItems = snacks
+      .filter(snack => quantities[snack.id] > 0)
+      .map(snack => ({
+        name: snack.name,
+        qty: quantities[snack.id],
+        price: snack.price,
+        total: snack.price * quantities[snack.id]
+      }));
+
     const newOrder = {
       id: Date.now(),
-      items: snacks
-        .filter(snack => quantities[snack.id] > 0)
-        .map(snack => ({
-          name: snack.name,
-          qty: quantities[snack.id],
-          price: snack.price
-        })),
+      items: orderItems,
       total: subtotal,
       paymentDone: false,
       createdAt: new Date().toLocaleTimeString()
     };
 
     setOrders(prev => [...prev, newOrder]);
+    setQuantities({});  // Reset form
+    navigate('/orders');  // Redirect to Orders page
   };
 
   return (
