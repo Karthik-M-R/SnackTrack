@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Billing from "./pages/Billing";
 import Orders from "./pages/Orders";
 import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
 
 function App() {
+  const location = useLocation();
   const [orders, setOrders] = useState([]);
   const [darkMode, setDarkMode] = useState(() => {
     // Check localStorage for saved preference
@@ -27,10 +29,14 @@ function App() {
     setDarkMode(prev => !prev);
   };
 
+  // Hide Navbar on login page
+  const showNavbar = location.pathname !== "/login";
+
   return (
     <>
-      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      {showNavbar && <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />}
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route
           path="/billing"
           element={<Billing setOrders={setOrders} />}
@@ -43,6 +49,7 @@ function App() {
           path="/dashboard"
           element={<Dashboard orders={orders} />}
         />
+        <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
     </>
   );

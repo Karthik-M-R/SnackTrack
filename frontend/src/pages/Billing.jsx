@@ -48,9 +48,9 @@ function Billing({ setOrders }) {
   };
 
   return (
-    <div className="p-6 min-h-screen pb-24">
-      <div className="max-w-4xl mx-auto bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-6 border border-white/20">
-        <h1 className="text-2xl font-bold mb-6 text-gray-800">Create Order</h1>
+    <div className="p-6 min-h-screen pb-24 bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      <div className="max-w-4xl mx-auto bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-2xl shadow-xl p-6 border border-orange-100/50 dark:border-slate-700/50">
+        <h1 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Create Order</h1>
 
         <div className="space-y-4">
           {snacks.map((snack) => (
@@ -65,7 +65,7 @@ function Billing({ setOrders }) {
         <BillSummary subtotal={subtotal} />
         <button
           onClick={handleCreateOrder}
-          className="mt-4 w-full bg-green-600 text-white py-2 rounded"
+          className="mt-4 w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-3 rounded-xl font-semibold shadow-lg shadow-green-200 dark:shadow-green-900/30 transition-all duration-300"
         >
           Create Order
         </button>
