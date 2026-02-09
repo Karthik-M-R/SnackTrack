@@ -38,7 +38,8 @@ function Billing({ setOrders }) {
       items: orderItems,
       total: subtotal,
       paymentDone: false,
-      createdAt: new Date().toLocaleTimeString()
+      createdAtFull: new Date(),
+      createdAtDate: new Date().toDateString()
     };
 
     setOrders(prev => [...prev, newOrder]);

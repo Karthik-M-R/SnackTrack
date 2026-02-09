@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* ========== LIGHT MODE (Default) ========== */
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -8,6 +9,13 @@ body {
   overflow-x: hidden;
   opacity: 0;
   animation: fadeIn 0.8s ease-out forwards;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ========== DARK MODE ========== */
+body.dark {
+  background-color: #0f172a;
+  color: #e2e8f0;
 }
 
 @keyframes fadeIn {
@@ -15,7 +23,7 @@ body {
   to { opacity: 1; }
 }
 
-/* Professional POS Structured Background */
+/* ========== LIGHT MODE BACKGROUND ========== */
 .mesh-background {
   position: fixed;
   top: 0;
@@ -24,6 +32,7 @@ body {
   height: 100vh;
   z-index: -1;
   background-color: #ffffff;
+  transition: background-color 0.3s ease;
   
   background-image: 
     /* Layer 1: The Blueprint Grid (Fixed) */
@@ -51,6 +60,27 @@ body {
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat;
 }
 
+/* ========== DARK MODE BACKGROUND ========== */
+body.dark .mesh-background {
+  background-color: #0f172a;
+  
+  background-image: 
+    /* Layer 1: Subtle Grid */
+    radial-gradient(rgba(100, 116, 139, 0.2) 1px, transparent 1px),
+    
+    /* Layer 2: Deep Blue Glow (Top Left) */
+    radial-gradient(circle at 0% 0%, #1e293b 0%, transparent 60%),
+    
+    /* Layer 3: Purple Accent (Top Right) */
+    radial-gradient(circle at 100% 0%, #312e81 0%, transparent 50%),
+    
+    /* Layer 4: Orange Accent (Bottom Right) */
+    radial-gradient(circle at 100% 100%, #7c2d12 0%, transparent 50%),
+
+    /* Layer 5: Blue Accent (Bottom Left) */
+    radial-gradient(circle at 0% 100%, #1e3a5f 0%, transparent 60%);
+}
+
 /* Add a slow breathing animation to the background via pseudo-element */
 .mesh-background::after {
   content: '';
@@ -64,9 +94,92 @@ body {
   opacity: 0.15;
   z-index: -2;
   animation: mesh-rotate 60s linear infinite;
+  transition: background 0.3s ease, opacity 0.3s ease;
+}
+
+body.dark .mesh-background::after {
+  background: conic-gradient(from 0deg at 50% 50%, #0f172a 0deg, #312e81 120deg, #1e3a5f 240deg, #0f172a 360deg);
+  opacity: 0.3;
 }
 
 @keyframes mesh-rotate {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* ========== DARK MODE COMPONENT UTILITIES ========== */
+
+/* Cards & Containers */
+body.dark .bg-white {
+  background-color: #1e293b !important;
+}
+
+body.dark .bg-white\/90 {
+  background-color: rgba(30, 41, 59, 0.9) !important;
+}
+
+body.dark .bg-white\/70 {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+}
+
+body.dark .bg-gray-50 {
+  background-color: #334155 !important;
+}
+
+body.dark .bg-slate-50 {
+  background-color: #1e293b !important;
+}
+
+/* Text Colors */
+body.dark .text-gray-800 {
+  color: #f1f5f9 !important;
+}
+
+body.dark .text-gray-700 {
+  color: #e2e8f0 !important;
+}
+
+body.dark .text-gray-600 {
+  color: #cbd5e1 !important;
+}
+
+body.dark .text-gray-500 {
+  color: #94a3b8 !important;
+}
+
+body.dark .text-gray-400 {
+  color: #64748b !important;
+}
+
+/* Borders */
+body.dark .border-gray-200,
+body.dark .border-gray-100,
+body.dark .border-white\/50,
+body.dark .border-white\/20 {
+  border-color: rgba(71, 85, 105, 0.5) !important;
+}
+
+/* Gradients */
+body.dark .from-slate-50 {
+  --tw-gradient-from: #1e293b !important;
+}
+
+body.dark .to-slate-100 {
+  --tw-gradient-to: #0f172a !important;
+}
+
+body.dark .from-gray-800 {
+  --tw-gradient-from: #f1f5f9 !important;
+}
+
+body.dark .to-gray-600 {
+  --tw-gradient-to: #e2e8f0 !important;
+}
+
+/* Shadows */
+body.dark .shadow-sm,
+body.dark .shadow-md,
+body.dark .shadow-lg,
+body.dark .shadow-xl {
+  --tw-shadow-color: rgba(0, 0, 0, 0.3) !important;
 }
