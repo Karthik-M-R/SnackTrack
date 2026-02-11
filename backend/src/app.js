@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 import User from "./models/User.js";
 import protect from "./middleware/authMiddleware.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 
 
@@ -65,6 +66,8 @@ app.get("/protected-test", protect, (req, res) => {
 
 app.use("/api/orders", orderRoutes);
 
+
+app.use("/api/dashboard", dashboardRoutes);
 
 
 
