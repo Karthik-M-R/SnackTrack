@@ -8,6 +8,10 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import User from "./models/User.js";
 import protect from "./middleware/authMiddleware.js";
+import orderRoutes from "./routes/orderRoutes.js";
+
+
+
 
 dotenv.config();
 
@@ -59,6 +63,7 @@ app.get("/protected-test", protect, (req, res) => {
 });
 
 
+app.use("/api/orders", orderRoutes);
 
 
 
