@@ -1,54 +1,46 @@
 // src/data/snacks.js
 
-import teaCoffee from "../assets/snacks/tea_cofee.png";
-import pakoda from "../assets/snacks/pakoda.png";
-import samosa from "../assets/snacks/samosa.png";
-import kachori from "../assets/snacks/kachori.png";
-import pavBhaji from "../assets/snacks/pavbhaji.png";
-import vadaPav from "../assets/snacks/vadapav.png";
-import sandwich from "../assets/snacks/sandwich.png";
-
 export const snacks = [
   {
     id: 1,
     name: "Tea / Coffee",
     price: 15,
-    image: teaCoffee
+    image: "/Images/snacks/tea_cofee.png"
   },
   {
     id: 2,
     name: "Pakoda",
     price: 25,
-    image: pakoda
+    image: "/Images/snacks/pakoda.png"
   },
   {
     id: 3,
     name: "Samosa",
     price: 15,
-    image: samosa
+    image: "/Images/snacks/samosa.png"
   },
   {
     id: 4,
     name: "Kachori",
     price: 20,
-    image: kachori
+    image: "/Images/snacks/kachori.png"
   },
   {
     id: 5,
     name: "Pav Bhaji",
     price: 60,
-    image: pavBhaji
+    image: "/Images/snacks/pavbhaji.png"
   },
   {
     id: 6,
     name: "Vada Pav",
     price: 25,
-    image: vadaPav
+    image: "/Images/snacks/vadapav.png"
   },
   {
     id: 7,
     name: "Sandwich",
     price: 40,
-    image: sandwich
+    image: "/Images/snacks/sandwich.png"
   }
 ];
