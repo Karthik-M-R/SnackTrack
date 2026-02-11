@@ -2,10 +2,13 @@
 import express from "express";
 import authRoutes from "./routes/authRoutes.js";
 
+
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import User from "./models/User.js";
+import protect from "./middleware/authMiddleware.js";
+
 dotenv.config();
 
 const app = express();
@@ -47,6 +50,14 @@ app.get("/db-test", async (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+
+app.get("/protected-test", protect, (req, res) => {
+    res.json({
+        message: "Protected route accessed",
+        user: req.user
+    });
+});
+
 
 
 
