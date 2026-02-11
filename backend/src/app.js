@@ -1,0 +1,57 @@
+// Express app configuration
+import express from "express";
+import authRoutes from "./routes/authRoutes.js";
+
+import cors from "cors";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import User from "./models/User.js";
+dotenv.config();
+
+const app = express();
+
+// middlewares
+app.use(cors());
+app.use(express.json());
+
+// basic test route
+app.get("/", (req, res) => {
+    res.send("SnackTrack API running");
+});
+
+// 🔴 MongoDB READ + WRITE TEST ROUTE
+app.get("/db-test", async (req, res) => {
+    try {
+        const TestSchema = new mongoose.Schema({
+            name: String,
+            createdAt: { type: Date, default: Date.now }
+        });
+
+        const Test =
+            mongoose.models.Test || mongoose.model("Test", TestSchema);
+
+        const doc = await Test.create({ name: "MongoDB OK" });
+        const count = await Test.countDocuments();
+
+        res.json({
+            message: "MongoDB write & read successful",
+            insertedDocument: doc,
+            totalDocuments: count
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "MongoDB test failed",
+            error: error.message
+        });
+    }
+});
+
+app.use("/api/auth", authRoutes);
+
+
+
+
+
+
+
+export default app;
