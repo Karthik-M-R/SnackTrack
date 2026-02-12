@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { snacks } from "../data/snacks";
 import SnackCard from "../components/SnackCard";
 import BillSummary from "../components/BillSummary";
+import API from "../api/api";
 
-
-function Billing({ setOrders }) {
+function Billing() {
   const navigate = useNavigate();
   const [quantities, setQuantities] = useState({});
+  const [creating, setCreating] = useState(false);
 
   const handleQuantityChange = (snackId, qty) => {
     setQuantities((prev) => ({
@@ -21,7 +22,7 @@ function Billing({ setOrders }) {
     return sum + snack.price * qty;
   }, 0);
 
-  const handleCreateOrder = () => {
+  const handleCreateOrder = async () => {
     if (subtotal === 0) return;
 
     const orderItems = snacks
@@ -33,18 +34,20 @@ function Billing({ setOrders }) {
         total: snack.price * quantities[snack.id]
       }));
 
-    const newOrder = {
-      id: Date.now(),
-      items: orderItems,
-      total: subtotal,
-      paymentDone: false,
-      createdAtFull: new Date(),
-      createdAtDate: new Date().toDateString()
-    };
-
-    setOrders(prev => [...prev, newOrder]);
-    setQuantities({});  // Reset form
-    navigate('/orders');  // Redirect to Orders page
+    setCreating(true);
+    try {
+      await API.post("/orders", {
+        items: orderItems,
+        totalAmount: subtotal
+      });
+      setQuantities({});  // Reset form
+      navigate('/orders');  // Redirect to Orders page
+    } catch (err) {
+      console.error("Failed to create order", err);
+      alert("Failed to create order. Please try again.");
+    } finally {
+      setCreating(false);
+    }
   };
 
   return (
@@ -65,9 +68,10 @@ function Billing({ setOrders }) {
         <BillSummary subtotal={subtotal} />
         <button
           onClick={handleCreateOrder}
-          className="mt-4 w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-3 rounded-xl font-semibold shadow-lg shadow-green-200 dark:shadow-green-900/30 transition-all duration-300"
+          disabled={creating || subtotal === 0}
+          className="mt-4 w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-3 rounded-xl font-semibold shadow-lg shadow-green-200 dark:shadow-green-900/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Create Order
+          {creating ? "Creating Order..." : "Create Order"}
         </button>
       </div>
     </div>

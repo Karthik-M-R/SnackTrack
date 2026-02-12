@@ -1,21 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import API from "../api/api";
 
-function Orders({ orders, setOrders }) {
+function Orders() {
+	const [orders, setOrders] = useState([]);
+	const [loading, setLoading] = useState(true);
 
-	// Toggle payment status (mark/unmark as paid)
-	const togglePayment = (orderId) => {
-		setOrders(prev =>
-			prev.map(order =>
-				order.id === orderId
-					? { ...order, paymentDone: !order.paymentDone }
-					: order
-			)
-		);
+	const fetchOrders = async () => {
+		try {
+			const { data } = await API.get("/orders");
+			setOrders(data);
+		} catch (err) {
+			console.error("Failed to fetch orders", err);
+		} finally {
+			setLoading(false);
+		}
 	};
 
-	// Delete pending order
-	const deleteOrder = (orderId) => {
-		setOrders(prev => prev.filter(order => order.id !== orderId));
+	useEffect(() => {
+		fetchOrders();
+	}, []);
+
+	// Mark order as paid (one-way, no undo)
+	const markPaid = async (orderId) => {
+		try {
+			await API.patch(`/orders/${orderId}/pay`);
+			fetchOrders();
+		} catch (err) {
+			console.error("Failed to mark order as paid", err);
+		}
+	};
+
+	// Undo payment (mark as unpaid)
+	const undoPayment = async (orderId) => {
+		try {
+			await API.patch(`/orders/${orderId}/unpay`);
+			fetchOrders();
+		} catch (err) {
+			console.error("Failed to undo payment", err);
+		}
+	};
+
+	// Delete order with confirmation
+	const deleteOrder = async (orderId) => {
+		if (!window.confirm("Delete this order?")) return;
+
+		try {
+			await API.delete(`/orders/${orderId}`);
+			fetchOrders();
+		} catch (err) {
+			console.error("Failed to delete order", err);
+		}
 	};
 
 	return (
@@ -25,7 +59,11 @@ function Orders({ orders, setOrders }) {
 					📋 Orders
 				</h1>
 
-				{orders.length === 0 && (
+				{loading && (
+					<p className="text-center text-gray-400">Loading orders...</p>
+				)}
+
+				{!loading && orders.length === 0 && (
 					<div className="text-center py-12 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-orange-100/50 dark:border-slate-700">
 						<p className="text-gray-400 dark:text-gray-500 text-lg">No orders yet</p>
 						<p className="text-gray-300 dark:text-gray-600 text-sm mt-2">Create your first order from Billing</p>
@@ -35,7 +73,7 @@ function Orders({ orders, setOrders }) {
 				<div className="space-y-5">
 					{orders.map((order, index) => (
 						<div
-							key={order.id}
+							key={order._id}
 							className={`rounded-2xl p-6 shadow-lg transition-all duration-300 ${order.paymentDone
 								? "bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-2 border-green-400 dark:border-green-600"
 								: "bg-white dark:bg-slate-800 border-2 border-yellow-400 dark:border-yellow-600 shadow-yellow-100 dark:shadow-yellow-900/20"
@@ -59,7 +97,7 @@ function Orders({ orders, setOrders }) {
 
 							{/* Time */}
 							<p className="text-sm text-gray-400 dark:text-gray-500 mb-3">
-								🕐 Created at: {order.createdAt}
+								🕐 Created at: {new Date(order.createdAt).toLocaleString()}
 							</p>
 
 							{/* Items */}
@@ -82,28 +120,25 @@ function Orders({ orders, setOrders }) {
 							{/* Total Amount */}
 							<div className="flex justify-between items-center py-3 px-4 bg-gray-800 dark:bg-slate-900 text-white rounded-xl mb-4">
 								<span className="text-lg font-medium">Total Amount</span>
-								<span className="text-2xl font-bold">₹{order.total}</span>
+								<span className="text-2xl font-bold">₹{order.totalAmount}</span>
 							</div>
 
 							{/* Actions */}
 							<div className="flex items-center gap-6">
-								{/* Paid Checkbox - only for unpaid orders */}
+								{/* Mark as Paid Button - only for unpaid orders */}
 								{!order.paymentDone && (
-									<label className="flex items-center gap-3 cursor-pointer text-base font-medium text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-colors">
-										<input
-											type="checkbox"
-											checked={order.paymentDone}
-											onChange={() => togglePayment(order.id)}
-											className="w-5 h-5 accent-green-500 cursor-pointer"
-										/>
-										Mark as Paid
-									</label>
+									<button
+										onClick={() => markPaid(order._id)}
+										className="flex items-center gap-2 text-green-600 hover:text-green-800 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 px-4 py-2 rounded-lg font-medium transition-all"
+									>
+										✅ Mark as Paid
+									</button>
 								)}
 
 								{/* Undo Payment Button - only for paid orders */}
 								{order.paymentDone && (
 									<button
-										onClick={() => togglePayment(order.id)}
+										onClick={() => undoPayment(order._id)}
 										className="flex items-center gap-2 text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 px-4 py-2 rounded-lg font-medium transition-all"
 									>
 										↩️ Undo Payment
@@ -113,7 +148,7 @@ function Orders({ orders, setOrders }) {
 								{/* Delete Button - only for unpaid orders */}
 								{!order.paymentDone && (
 									<button
-										onClick={() => deleteOrder(order.id)}
+										onClick={() => deleteOrder(order._id)}
 										className="text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 px-4 py-2 rounded-lg font-medium transition-all"
 									>
 										🗑️ Delete

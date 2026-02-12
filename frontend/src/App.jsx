@@ -39,11 +39,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route
           path="/billing"
-          element={<Billing setOrders={setOrders} />}
+          element={<Billing />}
         />
         <Route
           path="/orders"
-          element={<Orders orders={orders} setOrders={setOrders} />}
+          element={<Orders />}
         />
         <Route
           path="/dashboard"

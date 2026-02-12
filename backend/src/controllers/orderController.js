@@ -50,6 +50,22 @@ export const markOrderPaid = async (req, res) => {
     res.json(order);
 };
 
+// UNDO PAYMENT (mark as unpaid)
+export const undoPayment = async (req, res) => {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+        return res.status(404).json({
+            message: "Order not found"
+        });
+    }
+
+    order.paymentDone = false;
+    await order.save();
+
+    res.json(order);
+};
+
 // DELETE ORDER
 export const deleteOrder = async (req, res) => {
     const order = await Order.findById(req.params.id);

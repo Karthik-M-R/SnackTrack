@@ -4,6 +4,7 @@ import {
     createOrder,
     getOrders,
     markOrderPaid,
+    undoPayment,
     deleteOrder
 } from "../controllers/orderController.js";
 
@@ -16,6 +17,7 @@ const router = express.Router();
 router.post("/", protect, authorize("owner", "staff"), createOrder);
 router.get("/", protect, authorize("owner", "staff"), getOrders);
 router.patch("/:id/pay", protect, authorize("owner", "staff"), markOrderPaid);
+router.patch("/:id/unpay", protect, authorize("owner", "staff"), undoPayment);
 router.delete("/:id", protect, authorize("owner", "staff"), deleteOrder);
 
 export default router;
