@@ -27,7 +27,7 @@ Good night 🌙
       `;
 
             await sendTelegramMessage(message);
-            console.log("Daily summary sent to Telegram");
+            // console.log("Daily summary sent to Telegram"); // just for testing
         } catch (error) {
             console.error("Error in daily summary job:", error);
         }

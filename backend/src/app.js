@@ -22,46 +22,46 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// basic test route
-app.get("/", (req, res) => {
-    res.send("SnackTrack API running");
-});
+// basic test route - just for testing
+// app.get("/", (req, res) => {
+//     res.send("SnackTrack API running");
+// });
 
-// 🔴 MongoDB READ + WRITE TEST ROUTE
-app.get("/db-test", async (req, res) => {
-    try {
-        const TestSchema = new mongoose.Schema({
-            name: String,
-            createdAt: { type: Date, default: Date.now }
-        });
-
-        const Test =
-            mongoose.models.Test || mongoose.model("Test", TestSchema);
-
-        const doc = await Test.create({ name: "MongoDB OK" });
-        const count = await Test.countDocuments();
-
-        res.json({
-            message: "MongoDB write & read successful",
-            insertedDocument: doc,
-            totalDocuments: count
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: "MongoDB test failed",
-            error: error.message
-        });
-    }
-});
+// 🔴 MongoDB READ + WRITE TEST ROUTE - just for testing
+// app.get("/db-test", async (req, res) => {
+//     try {
+//         const TestSchema = new mongoose.Schema({
+//             name: String,
+//             createdAt: { type: Date, default: Date.now }
+//         });
+//
+//         const Test =
+//             mongoose.models.Test || mongoose.model("Test", TestSchema);
+//
+//         const doc = await Test.create({ name: "MongoDB OK" });
+//         const count = await Test.countDocuments();
+//
+//         res.json({
+//             message: "MongoDB write & read successful",
+//             insertedDocument: doc,
+//             totalDocuments: count
+//         });
+//     } catch (error) {
+//         res.status(500).json({
+//             message: "MongoDB test failed",
+//             error: error.message
+//         });
+//     }
+// });
 
 app.use("/api/auth", authRoutes);
 
-app.get("/protected-test", protect, (req, res) => {
-    res.json({
-        message: "Protected route accessed",
-        user: req.user
-    });
-});
+// app.get("/protected-test", protect, (req, res) => {
+//     res.json({
+//         message: "Protected route accessed",
+//         user: req.user
+//     });
+// });
 
 
 app.use("/api/orders", orderRoutes);
