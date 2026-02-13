@@ -47,7 +47,7 @@ function App() {
         />
         <Route
           path="/dashboard"
-          element={<Dashboard orders={orders} />}
+          element={<Dashboard />}
         />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>

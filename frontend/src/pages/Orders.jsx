@@ -52,6 +52,97 @@ function Orders() {
 		}
 	};
 
+	// Separate orders into Pending and Completed
+	const pendingOrders = orders.filter((o) => !o.paymentDone);
+	const completedOrders = orders.filter((o) => o.paymentDone);
+
+	const OrderCard = ({ order }) => (
+		<div
+			key={order._id}
+			className={`rounded-2xl p-6 shadow-lg transition-all duration-300 ${order.paymentDone
+				? "bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-2 border-green-400 dark:border-green-600"
+				: "bg-white dark:bg-slate-800 border-2 border-yellow-400 dark:border-yellow-600 shadow-yellow-100 dark:shadow-yellow-900/20"
+				}`}
+		>
+			{/* Header */}
+			<div className="flex justify-between items-center mb-4">
+				<h2 className="text-xl font-bold text-gray-800 dark:text-white">
+					🧾 Order #{order.orderId || "N/A"}
+				</h2>
+
+				<span
+					className={`text-sm font-semibold px-4 py-1.5 rounded-full shadow-sm ${order.paymentDone
+						? "bg-green-500 text-white"
+						: "bg-yellow-400 text-yellow-900"
+						}`}
+				>
+					{order.paymentDone ? "✓ Paid" : "⏳ Pending"}
+				</span>
+			</div>
+
+			{/* Time */}
+			<p className="text-sm text-gray-400 dark:text-gray-500 mb-3">
+				🕐 Created at: {new Date(order.createdAt).toLocaleString()}
+			</p>
+
+			{/* Items */}
+			<div className="bg-gray-50 dark:bg-slate-700/50 rounded-xl p-4 mb-4">
+				<h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
+					Items
+				</h3>
+				<ul className="space-y-2">
+					{order.items.map((item, i) => (
+						<li key={i} className="flex justify-between items-center text-base text-gray-700 dark:text-gray-300">
+							<span className="font-medium">{item.name}</span>
+							<span className="text-gray-500 dark:text-gray-400">
+								{item.qty} × ₹{item.price} = <strong className="text-gray-800 dark:text-white">₹{item.total}</strong>
+							</span>
+						</li>
+					))}
+				</ul>
+			</div>
+
+			{/* Total Amount */}
+			<div className="flex justify-between items-center py-3 px-4 bg-gray-800 dark:bg-slate-900 text-white rounded-xl mb-4">
+				<span className="text-lg font-medium">Total Amount</span>
+				<span className="text-2xl font-bold">₹{order.totalAmount}</span>
+			</div>
+
+			{/* Actions */}
+			<div className="flex items-center gap-6">
+				{/* Mark as Paid Button - only for unpaid orders */}
+				{!order.paymentDone && (
+					<button
+						onClick={() => markPaid(order._id)}
+						className="flex items-center gap-2 text-green-600 hover:text-green-800 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 px-4 py-2 rounded-lg font-medium transition-all"
+					>
+						✅ Mark as Paid
+					</button>
+				)}
+
+				{/* Undo Payment Button - only for paid orders */}
+				{order.paymentDone && (
+					<button
+						onClick={() => undoPayment(order._id)}
+						className="flex items-center gap-2 text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 px-4 py-2 rounded-lg font-medium transition-all"
+					>
+						↩️ Undo Payment
+					</button>
+				)}
+
+				{/* Delete Button - only for unpaid orders */}
+				{!order.paymentDone && (
+					<button
+						onClick={() => deleteOrder(order._id)}
+						className="text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 px-4 py-2 rounded-lg font-medium transition-all"
+					>
+						🗑️ Delete
+					</button>
+				)}
+			</div>
+		</div>
+	);
+
 	return (
 		<div className="p-8 min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
 			<div className="max-w-3xl mx-auto">
@@ -70,93 +161,36 @@ function Orders() {
 					</div>
 				)}
 
-				<div className="space-y-5">
-					{orders.map((order, index) => (
-						<div
-							key={order._id}
-							className={`rounded-2xl p-6 shadow-lg transition-all duration-300 ${order.paymentDone
-								? "bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-2 border-green-400 dark:border-green-600"
-								: "bg-white dark:bg-slate-800 border-2 border-yellow-400 dark:border-yellow-600 shadow-yellow-100 dark:shadow-yellow-900/20"
-								}`}
-						>
-							{/* Header */}
-							<div className="flex justify-between items-center mb-4">
-								<h2 className="text-xl font-bold text-gray-800 dark:text-white">
-									🧾 Order #{index + 1}
-								</h2>
-
-								<span
-									className={`text-sm font-semibold px-4 py-1.5 rounded-full shadow-sm ${order.paymentDone
-										? "bg-green-500 text-white"
-										: "bg-yellow-400 text-yellow-900"
-										}`}
-								>
-									{order.paymentDone ? "✓ Paid" : "⏳ Pending"}
-								</span>
-							</div>
-
-							{/* Time */}
-							<p className="text-sm text-gray-400 dark:text-gray-500 mb-3">
-								🕐 Created at: {new Date(order.createdAt).toLocaleString()}
-							</p>
-
-							{/* Items */}
-							<div className="bg-gray-50 dark:bg-slate-700/50 rounded-xl p-4 mb-4">
-								<h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
-									Items
-								</h3>
-								<ul className="space-y-2">
-									{order.items.map((item, i) => (
-										<li key={i} className="flex justify-between items-center text-base text-gray-700 dark:text-gray-300">
-											<span className="font-medium">{item.name}</span>
-											<span className="text-gray-500 dark:text-gray-400">
-												{item.qty} × ₹{item.price} = <strong className="text-gray-800 dark:text-white">₹{item.total}</strong>
-											</span>
-										</li>
-									))}
-								</ul>
-							</div>
-
-							{/* Total Amount */}
-							<div className="flex justify-between items-center py-3 px-4 bg-gray-800 dark:bg-slate-900 text-white rounded-xl mb-4">
-								<span className="text-lg font-medium">Total Amount</span>
-								<span className="text-2xl font-bold">₹{order.totalAmount}</span>
-							</div>
-
-							{/* Actions */}
-							<div className="flex items-center gap-6">
-								{/* Mark as Paid Button - only for unpaid orders */}
-								{!order.paymentDone && (
-									<button
-										onClick={() => markPaid(order._id)}
-										className="flex items-center gap-2 text-green-600 hover:text-green-800 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 px-4 py-2 rounded-lg font-medium transition-all"
-									>
-										✅ Mark as Paid
-									</button>
-								)}
-
-								{/* Undo Payment Button - only for paid orders */}
-								{order.paymentDone && (
-									<button
-										onClick={() => undoPayment(order._id)}
-										className="flex items-center gap-2 text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 px-4 py-2 rounded-lg font-medium transition-all"
-									>
-										↩️ Undo Payment
-									</button>
-								)}
-
-								{/* Delete Button - only for unpaid orders */}
-								{!order.paymentDone && (
-									<button
-										onClick={() => deleteOrder(order._id)}
-										className="text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 px-4 py-2 rounded-lg font-medium transition-all"
-									>
-										🗑️ Delete
-									</button>
-								)}
+				<div className="space-y-12">
+					{/* PENDING ORDERS SECTION */}
+					{pendingOrders.length > 0 && (
+						<div>
+							<h2 className="text-xl font-semibold mb-4 text-yellow-600 dark:text-yellow-400 flex items-center gap-2">
+								⏳ Pending Orders
+								<span className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs px-2 py-1 rounded-full">{pendingOrders.length}</span>
+							</h2>
+							<div className="space-y-5">
+								{pendingOrders.map((order) => (
+									<OrderCard key={order._id} order={order} />
+								))}
 							</div>
 						</div>
-					))}
+					)}
+
+					{/* COMPLETED ORDERS SECTION */}
+					{completedOrders.length > 0 && (
+						<div>
+							<h2 className="text-xl font-semibold mb-4 text-green-600 dark:text-green-400 flex items-center gap-2">
+								✅ Completed Orders
+								<span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs px-2 py-1 rounded-full">{completedOrders.length}</span>
+							</h2>
+							<div className="space-y-5">
+								{completedOrders.map((order) => (
+									<OrderCard key={order._id} order={order} />
+								))}
+							</div>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

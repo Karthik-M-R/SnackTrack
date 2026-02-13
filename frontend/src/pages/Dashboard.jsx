@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
 	BarChart,
 	Bar,
@@ -14,129 +14,63 @@ import {
 	AreaChart,
 	Area,
 } from "recharts";
+import API from "../api/api";
 
 // Color palette for charts
 const COLORS = ["#8b5cf6", "#06b6d4", "#f59e0b", "#ef4444", "#22c55e", "#ec4899", "#6366f1", "#14b8a6"];
 
-function Dashboard({ orders }) {
-	// CRITICAL: Only consider PAID orders for dashboard
-	const paidOrders = orders.filter((order) => order.paymentDone);
+function Dashboard() {
+	const [stats, setStats] = useState(null);
+	const [loading, setLoading] = useState(true);
 
-	// ===== EARNINGS CALCULATIONS =====
-	const today = new Date().toDateString();
-	const currentMonth = new Date().getMonth();
-	const currentYear = new Date().getFullYear();
-
-	// Today's earnings
-	const todaysEarnings = paidOrders
-		.filter((order) => order.createdAtDate === today)
-		.reduce((sum, order) => sum + order.total, 0);
-
-	// Monthly earnings
-	const monthlyEarnings = paidOrders
-		.filter((order) => {
-			const orderDate = new Date(order.createdAtFull);
-			return orderDate.getMonth() === currentMonth && orderDate.getFullYear() === currentYear;
-		})
-		.reduce((sum, order) => sum + order.total, 0);
-
-	// Total earnings (all time)
-	const totalEarnings = paidOrders.reduce((sum, order) => sum + order.total, 0);
-
-	// Total orders count
-	const totalOrders = orders.length;
-	const pendingOrders = orders.filter((o) => !o.paymentDone).length;
-
-	// Average order value
-	const avgOrderValue = paidOrders.length > 0 ? Math.round(totalEarnings / paidOrders.length) : 0;
-
-	// ===== LAST 7 DAYS EARNINGS DATA =====
-	const getLast7DaysData = () => {
-		const data = [];
-		for (let i = 6; i >= 0; i--) {
-			const date = new Date();
-			date.setDate(date.getDate() - i);
-			const dateStr = date.toDateString();
-			const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
-
-			const dayEarnings = paidOrders
-				.filter((order) => order.createdAtDate === dateStr)
-				.reduce((sum, order) => sum + order.total, 0);
-
-			data.push({
-				day: dayName,
-				earnings: dayEarnings,
-				date: dateStr,
-			});
-		}
-		return data;
-	};
-
-	// ===== TOP SELLING SNACKS =====
-	const getTopSnacksData = () => {
-		const snackCounts = {};
-		paidOrders.forEach((order) => {
-			order.items?.forEach((item) => {
-				snackCounts[item.name] = (snackCounts[item.name] || 0) + item.qty;
-			});
-		});
-
-		return Object.entries(snackCounts)
-			.map(([name, qty]) => ({ name, qty }))
-			.sort((a, b) => b.qty - a.qty)
-			.slice(0, 6);
-	};
-
-	// ===== PEAK HOURS ANALYSIS =====
-	const getPeakHoursData = () => {
-		const hourCounts = {};
-		for (let i = 8; i <= 22; i++) {
-			hourCounts[i] = 0;
-		}
-
-		paidOrders.forEach((order) => {
-			const hour = new Date(order.createdAtFull).getHours();
-			if (hour >= 8 && hour <= 22) {
-				hourCounts[hour] = (hourCounts[hour] || 0) + 1;
+	useEffect(() => {
+		const fetchDashboard = async () => {
+			try {
+				const { data } = await API.get("/dashboard/summary");
+				setStats(data);
+			} catch (err) {
+				console.error("Failed to load dashboard:", err);
+			} finally {
+				setLoading(false);
 			}
-		});
+		};
+		fetchDashboard();
+	}, []);
 
-		return Object.entries(hourCounts).map(([hour, orders]) => ({
-			hour: `${hour}:00`,
-			orders: orders,
-		}));
-	};
+	if (loading) {
+		return (
+			<div className="p-6 min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center">
+				<div className="text-center">
+					<div className="w-12 h-12 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+					<p className="text-gray-500 dark:text-gray-400 text-lg">Loading dashboard...</p>
+				</div>
+			</div>
+		);
+	}
 
-	// ===== PAYMENT STATUS =====
-	const getPaymentStatusData = () => {
-		const paid = orders.filter((o) => o.paymentDone).length;
-		const pending = orders.filter((o) => !o.paymentDone).length;
-		return [
-			{ name: "Paid", value: paid },
-			{ name: "Pending", value: pending },
-		].filter((item) => item.value > 0);
-	};
+	if (!stats) {
+		return (
+			<div className="p-6 min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center">
+				<p className="text-red-500 text-lg">Failed to load dashboard data.</p>
+			</div>
+		);
+	}
 
-	// ===== TOP REVENUE ITEMS =====
-	const getTopRevenueItems = () => {
-		const revenueMap = {};
-		paidOrders.forEach((order) => {
-			order.items?.forEach((item) => {
-				revenueMap[item.name] = (revenueMap[item.name] || 0) + item.total;
-			});
-		});
+	// ===== DATA FROM BACKEND (no client-side computation) =====
+	const last7DaysData = stats.last7Days;
+	const topSnacksData = stats.topSnacks;
+	const peakHoursData = stats.peakHours;
+	const paymentStatusData = [
+		{ name: "Paid", value: stats.paymentStatus.paid },
+		{ name: "Pending", value: stats.paymentStatus.pending },
+	].filter((item) => item.value > 0);
+	const topRevenueItems = stats.topRevenueItems;
 
-		return Object.entries(revenueMap)
-			.map(([name, revenue]) => ({ name, revenue }))
-			.sort((a, b) => b.revenue - a.revenue)
-			.slice(0, 5);
-	};
-
-	const last7DaysData = getLast7DaysData();
-	const topSnacksData = getTopSnacksData();
-	const peakHoursData = getPeakHoursData();
-	const paymentStatusData = getPaymentStatusData();
-	const topRevenueItems = getTopRevenueItems();
+	// Derived values for stat cards
+	const totalOrders = stats.totalPaidOrders + stats.paymentStatus.pending;
+	const pendingOrders = stats.paymentStatus.pending;
+	const totalEarnings = stats.monthlyEarnings; // shown as all-time in insights panel
+	const avgOrderValue = stats.totalPaidOrders > 0 ? Math.round(stats.monthlyEarnings / stats.totalPaidOrders) : 0;
 
 	// Custom tooltip style
 	const CustomTooltip = ({ active, payload, label }) => {
@@ -167,7 +101,7 @@ function Dashboard({ orders }) {
 						<div className="flex items-center justify-between">
 							<div>
 								<p className="text-violet-100 text-sm font-medium">Today's Earnings</p>
-								<p className="text-3xl font-bold mt-1">₹{todaysEarnings}</p>
+								<p className="text-3xl font-bold mt-1">₹{stats.todayEarnings}</p>
 							</div>
 							<div className="bg-white/20 p-3 rounded-xl">
 								<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,7 +116,7 @@ function Dashboard({ orders }) {
 						<div className="flex items-center justify-between">
 							<div>
 								<p className="text-cyan-100 text-sm font-medium">This Month</p>
-								<p className="text-3xl font-bold mt-1">₹{monthlyEarnings}</p>
+								<p className="text-3xl font-bold mt-1">₹{stats.monthlyEarnings}</p>
 							</div>
 							<div className="bg-white/20 p-3 rounded-xl">
 								<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -386,14 +320,14 @@ function Dashboard({ orders }) {
 						<div className="bg-white/10 rounded-xl p-4">
 							<p className="text-violet-200 text-sm">Conversion Rate</p>
 							<p className="text-2xl font-bold">
-								{totalOrders > 0 ? Math.round((paidOrders.length / totalOrders) * 100) : 0}%
+								{totalOrders > 0 ? Math.round((stats.totalPaidOrders / totalOrders) * 100) : 0}%
 							</p>
 							<p className="text-xs text-violet-200 mt-1">Orders paid vs total</p>
 						</div>
 						<div className="bg-white/10 rounded-xl p-4">
-							<p className="text-violet-200 text-sm">All-Time Revenue</p>
-							<p className="text-2xl font-bold">₹{totalEarnings}</p>
-							<p className="text-xs text-violet-200 mt-1">From {paidOrders.length} paid orders</p>
+							<p className="text-violet-200 text-sm">Monthly Revenue</p>
+							<p className="text-2xl font-bold">₹{stats.monthlyEarnings}</p>
+							<p className="text-xs text-violet-200 mt-1">From {stats.totalPaidOrders} paid orders</p>
 						</div>
 						<div className="bg-white/10 rounded-xl p-4">
 							<p className="text-violet-200 text-sm">Best Performer</p>

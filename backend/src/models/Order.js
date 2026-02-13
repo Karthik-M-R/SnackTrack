@@ -17,6 +17,11 @@ const orderSchema = new mongoose.Schema(
             required: true
         },
 
+        orderId: {
+            type: Number,
+            // required: true  <-- Removed to allow updating old orders without IDs
+        },
+
         paymentDone: {
             type: Boolean,
             default: false

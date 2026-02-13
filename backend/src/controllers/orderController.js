@@ -11,9 +11,26 @@ export const createOrder = async (req, res) => {
         });
     }
 
+    // Get today's date range (00:00 to 23:59)
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    // Find the last order created TODAY
+    const lastOrder = await Order.findOne({
+        createdAt: { $gte: startOfDay, $lte: endOfDay }
+    }).sort({ createdAt: -1 });
+
+    // If there's an order today, increment its ID. Otherwise, start at 1.
+    // robust check: lastOrder.orderId might be undefined for old records
+    const orderId = (lastOrder && lastOrder.orderId) ? lastOrder.orderId + 1 : 1;
+
     const order = await Order.create({
         items,
         totalAmount,
+        orderId,
         createdBy: req.user._id
     });
 
