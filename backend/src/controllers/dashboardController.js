@@ -1,6 +1,8 @@
 import Order from "../models/Order.js";
+import { buildDailySummary } from "../services/dashboard_summary_service.js";
 
 export const getDashboardSummary = async (req, res) => {
+    const summary = await buildDailySummary();
     const orders = await Order.find();
 
     const paidOrders = orders.filter(o => o.paymentDone);
@@ -11,9 +13,7 @@ export const getDashboardSummary = async (req, res) => {
     const year = now.getFullYear();
 
     // ===== BASIC METRICS =====
-    const todayEarnings = paidOrders
-        .filter(o => new Date(o.createdAt).toDateString() === todayStr)
-        .reduce((sum, o) => sum + o.totalAmount, 0);
+    const todayEarnings = summary.todayEarnings;
 
     const monthlyEarnings = paidOrders
         .filter(o => {
@@ -22,7 +22,7 @@ export const getDashboardSummary = async (req, res) => {
         })
         .reduce((sum, o) => sum + o.totalAmount, 0);
 
-    const totalPaidOrders = paidOrders.length;
+    const totalPaidOrders = summary.totalPaidOrders;
 
     // ===== LAST 7 DAYS =====
     const last7Days = [];
@@ -68,8 +68,8 @@ export const getDashboardSummary = async (req, res) => {
 
     // ===== PAYMENT STATUS =====
     const paymentStatus = {
-        paid: paidOrders.length,
-        pending: orders.length - paidOrders.length
+        paid: summary.totalPaidOrders,
+        pending: summary.pendingOrders
     };
 
     // ===== TOP REVENUE ITEMS =====
@@ -94,6 +94,7 @@ export const getDashboardSummary = async (req, res) => {
         topSnacks,
         peakHours,
         paymentStatus,
-        topRevenueItems
+        topRevenueItems,
+        topSnack: summary.topSnack
     });
 };
