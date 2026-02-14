@@ -44,7 +44,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
           <div className="flex items-center gap-4">
             {/* Logo Section */}
             <Link to={isOwner ? "/dashboard" : "/billing"} className="flex items-center gap-3 group" onClick={closeMenu}>
-              <div className="relative w-10 h-10 transition-transform duration-300 group-hover:scale-105">
+              <div className="relative w-14 h-14 transition-transform duration-300 group-hover:scale-105">
                 <img
                   src="/Images/Logo.png"
                   alt="SnackTrack Logo"
@@ -52,7 +52,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                 />
               </div>
               <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent tracking-tight">
+                <span className="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent tracking-tight">
                   SnackTrack
                 </span>
                 {/* Upward Growth Arrow Icon */}
@@ -64,7 +64,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-4 h-4 text-green-500 mb-1 transform group-hover:-translate-y-1 transition-transform duration-300"
+                  className="w-5 h-5 text-green-500 mb-1 transform group-hover:-translate-y-1 transition-transform duration-300"
                 >
                   <path d="M12 19V5" />
                   <path d="M5 12l7-7 7 7" />
@@ -74,8 +74,8 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
 
             {/* User Badge */}
             <div className={`hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold ${isOwner
-                ? 'bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300'
-                : 'bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300'
+              ? 'bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300'
+              : 'bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300'
               }`}>
               <span>{isOwner ? '👑' : '👤'}</span>
               <span>{isOwner ? 'Owner' : 'Staff'}</span>
@@ -166,8 +166,8 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
         >
           {/* Mobile User Badge */}
           <div className={`sm:hidden flex items-center gap-2 px-4 py-2 mb-2 rounded-xl text-sm font-semibold ${isOwner
-              ? 'bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300'
-              : 'bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300'
+            ? 'bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300'
+            : 'bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300'
             }`}>
             <span>{isOwner ? '👑' : '👤'}</span>
             <span>Logged in as {isOwner ? 'Owner' : 'Staff'}</span>
