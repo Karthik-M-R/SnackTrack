@@ -18,8 +18,34 @@ dotenv.config();
 
 const app = express();
 
+// Security Packages
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+
 // middlewares
-app.use(cors());
+
+// 1. Helmet: Secure HTTP headers (XSS protection, etc.)
+app.use(helmet());
+
+// 2. Rate Limiting: Prevent brute-force attacks
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    message: "Too many requests from this IP, please try again after 15 minutes",
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+app.use("/api", limiter); // Apply to all API routes
+
+// 3. CORS: Restrict access to specific domains
+app.use(cors({
+    origin: [
+        "http://localhost:5173", // Local Development
+        // "https://your-production-url.vercel.app" // ADD PRODUCTION URL HERE
+    ],
+    credentials: true // Allow cookies/sessions
+}));
+
 app.use(express.json());
 
 // basic test route - just for testing

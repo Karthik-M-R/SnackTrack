@@ -70,7 +70,9 @@ function Dashboard() {
 	const totalOrders = stats.totalPaidOrders + stats.paymentStatus.pending;
 	const pendingOrders = stats.paymentStatus.pending;
 	const totalEarnings = stats.monthlyEarnings; // shown as all-time in insights panel
-	const avgOrderValue = stats.totalPaidOrders > 0 ? Math.round(stats.monthlyEarnings / stats.totalPaidOrders) : 0;
+	// AOV Explanation:
+	// AOV = Total Revenue / Total Number of Orders
+	const avgOrderValue = totalOrders > 0 ? Math.round(stats.todayEarnings / stats.totalPaidOrders) : 0;
 
 	// Custom tooltip style
 	const CustomTooltip = ({ active, payload, label }) => {
