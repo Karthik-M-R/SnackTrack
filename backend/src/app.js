@@ -24,10 +24,21 @@ import rateLimit from "express-rate-limit";
 
 // middlewares
 
-// 1. Helmet: Secure HTTP headers (XSS protection, etc.)
-app.use(helmet());
+// 1. CORS: MUST be FIRST (before Helmet) so preflight OPTIONS requests are handled
+app.use(cors({
+    origin: [
+        "http://localhost:5173", // Local Development
+        "https://snack-track-theta.vercel.app" // Production Frontend
+    ],
+    credentials: true // Allow cookies/sessions
+}));
 
-// 2. Rate Limiting: Prevent brute-force attacks
+// 2. Helmet: Secure HTTP headers (configured to not block CORS)
+app.use(helmet({
+    crossOriginResourcePolicy: false
+}));
+
+// 3. Rate Limiting: Prevent brute-force attacks
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each IP to 100 requests per windowMs
@@ -37,21 +48,12 @@ const limiter = rateLimit({
 });
 app.use("/api", limiter); // Apply to all API routes
 
-// 3. CORS: Restrict access to specific domains
-app.use(cors({
-    origin: [
-        // "http://localhost:5173", // Local Development
-        "https://snack-track-theta.vercel.app" // Production Frontend
-    ],
-    credentials: true // Allow cookies/sessions
-}));
-
 app.use(express.json());
 
-// basic test route - just for testing
-// app.get("/", (req, res) => {
-//     res.send("SnackTrack API running");
-// });
+// Health check route
+app.get("/", (req, res) => {
+    res.send("SnackTrack API running");
+});
 
 // 🔴 MongoDB READ + WRITE TEST ROUTE - just for testing
 // app.get("/db-test", async (req, res) => {
