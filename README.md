@@ -1,47 +1,49 @@
-🚀 Project Overview: SnackTrack
-SnackTrack is a specialized Point of Sale (POS) and business intelligence tool designed to streamline operations for small-scale retail food outlets. It moves beyond simple paper-billing by digitizing the entire order lifecycle—from item selection to payment tracking and growth analysis.
+# SnackTrack - Smart POS & Analytics for Food Retail
 
-🛑 The Problem
-Small snack shop owners often face three major challenges:
+**SnackTrack** is a modern Point of Sale (POS) and business intelligence tool designed to streamline operations for small-scale retail food outlets. It digitizes the entire order lifecycle—from item selection to payment tracking and growth analysis.
 
-Revenue Leakage: Orders are placed, but in a rush, it’s hard to track who has paid and who is still eating.
+## 🌟 Key Features
 
-Lack of Insights: Business owners don't know exactly which snacks are their "best-sellers" or how their daily revenue is growing.
+-   **⚡ High-Speed Billing**: A grid-based UI designed for ultra-fast, 2-click order placement.
+-   **📋 Order Management**: Track orders in real-time with a "Pending" vs "Completed" status workflow.
+-   **📊 Automated Analytics**: Visualize daily earnings, product performance, and growth trends with interactive charts.
+-   **📱 Telegram Reports**: Get automated daily sales summaries sent directly to your phone.
+-   **🔐 Role-Based Access**: Secure dashboards for owners and simplified interfaces for staff.
+-   **🌓 Dark/Light Mode**: A beautiful, responsive interface that adapts to your environment.
 
-Manual Reporting: Calculating the day's profit at night is a manual, error-prone task.
+## 🚀 Quick Start
 
-✅ The Solution
-SnackTrack solves these by providing:
+### Prerequisites
+-   Node.js (v18+)
+-   MongoDB (Local or Atlas)
 
-High-Speed POS Interface: A grid-based UI that allows for 2-click billing.
+### Installation
 
-Order Lifecycle Management: An "Order Queue" that keeps track of unpaid bills until a "Payment Done" confirmation is triggered.
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/yourusername/SnackTrack.git
+    cd SnackTrack
+    ```
 
-Automated Analytics: Instant visualization of earnings and product performance through interactive charts.
+2.  **Setup Backend**
+    ```bash
+    cd backend
+    npm install
+    # Create .env file (see backend/README.md)
+    npm run dev
+    ```
 
-Telegram Integration: Automated daily sales summaries sent directly to the owner's phone.
+3.  **Setup Frontend**
+    ```bash
+    cd frontend
+    npm install
+    # Create .env file (see frontend/README.md)
+    npm run dev
+    ```
 
-🛠️ The Technical Flow
-1. The Billing Engine (Frontend Logic)
-User selects items from a dynamic grid.
+## 🏗️ Project Structure
 
-State is managed locally using React Hooks, calculating subtotals and taxes (GST) in real-time.
+-   `frontend/`: React-based User Interface
+-   `backend/`: Node.js & Express API
 
-When "Place Order" is clicked, a new document is created in the database with a status: "Pending".
-
-2. The Order Queue (State Transition)
-The system displays a list of active orders.
-
-The owner can toggle the "Payment Done" status, which transitions the order from Pending to Completed.
-
-This ensures that only actually paid money is reflected in the business graphs.
-
-3. Data Visualization (The Dashboard)
-The system aggregates data from the MongoDB collections.
-
-Recharts is used to plot daily earnings and category-wise sales (Pie Charts), allowing the owner to make data-driven decisions on stock.
-
-4. Automated Reporting (The Backend Task)
-A Node-Cron job runs a daily script at the shop’s closing time.
-
-It calculates the day's "Paid" total and sends a formatted message to the owner via the Telegram Bot API.
+Check the `README.md` files in each directory for more details.
