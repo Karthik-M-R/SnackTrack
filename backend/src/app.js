@@ -40,8 +40,8 @@ app.use("/api", limiter); // Apply to all API routes
 // 3. CORS: Restrict access to specific domains
 app.use(cors({
     origin: [
-        "snack-track-theta.vercel.app", //deployed link
-
+        // "http://localhost:5173", // Local Development
+        "https://snack-track-theta.vercel.app" // Production Frontend
     ],
     credentials: true // Allow cookies/sessions
 }));
