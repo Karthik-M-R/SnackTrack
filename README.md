@@ -21,7 +21,7 @@
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/yourusername/SnackTrack.git
+    git clone https://github.com/Karthik-M-R/SnackTrack.git
     cd SnackTrack
     ```
 
