@@ -4,7 +4,7 @@ import API from "../api/api";
 
 function Login() {
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
+    const [posId, setPosId] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ function Login() {
 
         try {
             const { data } = await API.post("/auth/login", {
-                email,
+                email: posId,
                 password
             });
 
@@ -72,15 +72,16 @@ function Login() {
                             </div>
                         )}
 
-                        {/* Email */}
+                        {/* POS ID */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                Email Address
+                                POS ID
                             </label>
                             <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                type="text"
+                                placeholder="Enter your POS ID"
+                                value={posId}
+                                onChange={(e) => setPosId(e.target.value)}
                                 required
                                 className="w-full px-4 py-3 rounded-xl border"
                             />
@@ -109,6 +110,22 @@ function Login() {
                             {isLoading ? "Signing in..." : "Sign In"}
                         </button>
                     </form>
+                </div>
+
+                {/* Demo Credentials */}
+                <div className="mt-5 bg-amber-50 dark:bg-slate-700/60 border border-amber-200 dark:border-amber-500/30 rounded-2xl p-5 text-sm">
+                    <p className="font-bold text-amber-700 dark:text-amber-400 mb-2">🔑 Demo Credentials</p>
+                    <div className="space-y-1 text-gray-600 dark:text-gray-300">
+                        <p><span className="font-semibold">Owner POS ID:</span> owner@shop.com</p>
+                        <p><span className="font-semibold">Staff POS ID:</span> staff@shop.com</p>
+                        <p><span className="font-semibold">Password:</span> 123456</p>
+                    </div>
+                    <p className="mt-3 text-xs text-gray-500 dark:text-gray-400 italic">
+                        These are demo credentials only. For a personal POS system, contact{" "}
+                        <a href="mailto:karthikmr135@gmail.com" className="text-orange-500 underline hover:text-orange-600">karthikmr135@gmail.com</a>{" "}
+                        or connect on{" "}
+                        <a href="https://www.linkedin.com/in/karthik-mr-714558294/" target="_blank" rel="noreferrer" className="text-orange-500 underline hover:text-orange-600">LinkedIn</a>.
+                    </p>
                 </div>
             </div>
         </div>
