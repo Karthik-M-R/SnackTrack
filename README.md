@@ -11,6 +11,20 @@
 -   **🔐 Role-Based Access**: Secure dashboards for owners and simplified interfaces for staff.
 -   **🌓 Dark/Light Mode**: A beautiful, responsive interface that adapts to your environment.
 
+## 🔑 Demo Credentials
+
+Try out SnackTrack instantly using the credentials below:
+
+| Role  | POS ID           | Password |
+|-------|------------------|----------|
+| Owner | owner@shop.com   | 123456   |
+| Staff | staff@shop.com   | 123456   |
+
+> **Note:** These are demo credentials for exploration purposes only.  
+> Want a personal POS system? Reach out at **karthikmr135@gmail.com** or connect on [LinkedIn](https://www.linkedin.com/in/karthik-mr-714558294/).
+
+---
+
 ## 🚀 Quick Start
 
 ### Prerequisites
