@@ -35,7 +35,7 @@ Try out SnackTrack instantly using the credentials below:
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/yourusername/SnackTrack.git
+    git clone https://github.com/Karthik-M-R/SnackTrack.git
     cd SnackTrack
     ```
 
