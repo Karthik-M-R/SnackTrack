@@ -1,6 +1,3 @@
-Here is the updated, cleanly aligned, and properly structured markdown for your `README.md`. I have added a dedicated, professional **Contributing Guidelines** section and expanded the **Future Enhancements** roadmap to include the RAG AI integration, a dynamic inventory/menu editor for owners, and other advanced POS features.
-
----
 
 # SnackTrack - Smart POS & Analytics for Food Retail
 
@@ -112,3 +109,6 @@ We love community contributions! To maintain code quality and keep the project s
 ## 📄 License
 
 This project is open-source software licensed under the **MIT License**. Feel free to use, modify, and distribute it.
+
+
+🛡️ Built with ❤️ by Karthik M R
