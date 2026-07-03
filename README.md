@@ -60,4 +60,20 @@ Try out SnackTrack instantly using the credentials below:
 -   `frontend/`: React-based User Interface
 -   `backend/`: Node.js & Express API
 
+
+  
+  Open Source
+This project is open source and open to contributions.
+
+If you would like to contribute:
+
+Fork the repository
+Create a feature branch
+Commit your changes
+Open a Pull Request
+Please avoid committing secrets (API keys, tokens, .env files).
+
+License
+MIT License
+
 Check the `README.md` files in each directory for more details.
