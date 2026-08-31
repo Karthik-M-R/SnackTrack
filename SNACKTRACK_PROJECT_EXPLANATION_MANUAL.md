@@ -115,46 +115,46 @@ SnackTrack/
 
 ### Folder Responsibilities Summary
 
-| Folder | Responsibility | Key Files | Used By |
-|--------|---------------|-----------|---------|
-| `backend/src/controllers` | Business logic execution | `orderController.js`, `dashboardController.js` | All route handlers |
-| `backend/src/middleware` | Request filtering / gating | `authMiddleware.js`, `roleMiddleware.js` | All protected routes |
-| `backend/src/models` | MongoDB schema definitions | `User.js`, `Order.js` | Controllers, services |
-| `backend/src/routes` | URL-to-controller mapping | `orderRoutes.js`, `dashboardRoutes.js` | `app.js` |
-| `backend/src/services` | Shared reusable logic | `dashboard_summary_service.js`, `telegram_service.js` | Dashboard controller, cron job |
-| `backend/src/jobs` | Scheduled background tasks | `daily_summary_job.js` | Imported in `server.js` |
-| `backend/src/utils` | Small utility functions | `generateToken.js` | Auth controller |
-| `backend/src/config` | Configuration bootstrap | `db.js` | `server.js` |
-| `frontend/src/pages` | Full page components | `Billing.jsx`, `Dashboard.jsx` | React Router routes |
-| `frontend/src/components` | Reusable UI components | `Navbar.jsx`, `SnackCard.jsx` | Pages |
-| `frontend/src/api` | Centralized HTTP client | `api.js` | All pages making API calls |
-| `frontend/src/data` | Static hardcoded data | `snacks.js` | `Billing.jsx` |
+| Folder                    | Responsibility             | Key Files                                             | Used By                        |
+| ------------------------- | -------------------------- | ----------------------------------------------------- | ------------------------------ |
+| `backend/src/controllers` | Business logic execution   | `orderController.js`, `dashboardController.js`        | All route handlers             |
+| `backend/src/middleware`  | Request filtering / gating | `authMiddleware.js`, `roleMiddleware.js`              | All protected routes           |
+| `backend/src/models`      | MongoDB schema definitions | `User.js`, `Order.js`                                 | Controllers, services          |
+| `backend/src/routes`      | URL-to-controller mapping  | `orderRoutes.js`, `dashboardRoutes.js`                | `app.js`                       |
+| `backend/src/services`    | Shared reusable logic      | `dashboard_summary_service.js`, `telegram_service.js` | Dashboard controller, cron job |
+| `backend/src/jobs`        | Scheduled background tasks | `daily_summary_job.js`                                | Imported in `server.js`        |
+| `backend/src/utils`       | Small utility functions    | `generateToken.js`                                    | Auth controller                |
+| `backend/src/config`      | Configuration bootstrap    | `db.js`                                               | `server.js`                    |
+| `frontend/src/pages`      | Full page components       | `Billing.jsx`, `Dashboard.jsx`                        | React Router routes            |
+| `frontend/src/components` | Reusable UI components     | `Navbar.jsx`, `SnackCard.jsx`                         | Pages                          |
+| `frontend/src/api`        | Centralized HTTP client    | `api.js`                                              | All pages making API calls     |
+| `frontend/src/data`       | Static hardcoded data      | `snacks.js`                                           | `Billing.jsx`                  |
 
 ---
 
 ## 1.2 Technology Stack — VERIFIED
 
-| Technology | Version (from package.json) | Actual Usage | Why Used in THIS Project | Key Files |
-|---|---|---|---|---|
-| **Node.js** | v18+ (required) | Backend runtime | JavaScript server-side execution | `server.js`, all backend |
-| **Express.js** | ^5.2.1 | HTTP server, routing, middleware | Lightweight REST API framework | `app.js`, all route files |
-| **MongoDB** (Atlas) | Cloud | Persistent data store | Document storage for orders and users | Configured via `MONGO_URI` env var |
-| **Mongoose** | ^9.1.6 | ODM — schema definitions, queries | Structured access to MongoDB | `User.js`, `Order.js`, all controllers |
-| **bcryptjs** | ^3.0.3 | Password hashing in `pre("save")` hook | Secure password storage | `User.js` |
-| **jsonwebtoken** | ^9.0.3 | JWT sign/verify | Stateless authentication | `generateToken.js`, `authMiddleware.js` |
-| **node-cron** | ^4.2.1 | Cron scheduler at 10 PM IST | Automated daily Telegram report | `daily_summary_job.js` |
-| **axios** (backend) | ^1.13.5 | HTTP POST to Telegram Bot API | Sends Telegram messages | `telegram_service.js` |
-| **helmet** | ^8.1.0 | Adds 11 security HTTP headers | Protects against common web attacks | `app.js` |
-| **express-rate-limit** | ^8.2.1 | 100 req/15min per IP on `/api` | Brute-force and DoS mitigation | `app.js` |
-| **cors** | ^2.8.6 | Cross-origin request policy | Allows frontend (Vercel) to call backend (Render) | `app.js` |
-| **dotenv** | ^17.2.4 | Loads `.env` file into `process.env` | Secret management | `server.js`, `app.js` |
-| **React** | ^19.2.0 | Frontend SPA framework | Component-based UI | `main.jsx`, all page/component files |
-| **react-router-dom** | ^7.13.0 | Client-side routing | Multi-page SPA navigation | `App.jsx`, `Navbar.jsx`, all pages |
-| **Recharts** | ^3.7.0 | Chart rendering library | Bar, Pie/Donut, Area charts in Dashboard | `Dashboard.jsx` |
-| **axios** (frontend) | ^1.13.5 | HTTP client with interceptors | All API calls from frontend | `api.js` |
-| **Vite** | ^7.2.4 | Build tool and dev server | Fast bundling and HMR | `vite.config.js` |
-| **Tailwind CSS** | ^4.1.18 | Utility-first CSS framework | All UI styling | `index.css`, all JSX files |
-| **nodemon** (dev) | ^3.1.11 | Auto-restart on file changes | Development convenience | Dev script in `package.json` |
+| Technology             | Version (from package.json) | Actual Usage                           | Why Used in THIS Project                          | Key Files                               |
+| ---------------------- | --------------------------- | -------------------------------------- | ------------------------------------------------- | --------------------------------------- |
+| **Node.js**            | v18+ (required)             | Backend runtime                        | JavaScript server-side execution                  | `server.js`, all backend                |
+| **Express.js**         | ^5.2.1                      | HTTP server, routing, middleware       | Lightweight REST API framework                    | `app.js`, all route files               |
+| **MongoDB** (Atlas)    | Cloud                       | Persistent data store                  | Document storage for orders and users             | Configured via `MONGO_URI` env var      |
+| **Mongoose**           | ^9.1.6                      | ODM — schema definitions, queries      | Structured access to MongoDB                      | `User.js`, `Order.js`, all controllers  |
+| **bcryptjs**           | ^3.0.3                      | Password hashing in `pre("save")` hook | Secure password storage                           | `User.js`                               |
+| **jsonwebtoken**       | ^9.0.3                      | JWT sign/verify                        | Stateless authentication                          | `generateToken.js`, `authMiddleware.js` |
+| **node-cron**          | ^4.2.1                      | Cron scheduler at 10 PM IST            | Automated daily Telegram report                   | `daily_summary_job.js`                  |
+| **axios** (backend)    | ^1.13.5                     | HTTP POST to Telegram Bot API          | Sends Telegram messages                           | `telegram_service.js`                   |
+| **helmet**             | ^8.1.0                      | Adds 11 security HTTP headers          | Protects against common web attacks               | `app.js`                                |
+| **express-rate-limit** | ^8.2.1                      | 100 req/15min per IP on `/api`         | Brute-force and DoS mitigation                    | `app.js`                                |
+| **cors**               | ^2.8.6                      | Cross-origin request policy            | Allows frontend (Vercel) to call backend (Render) | `app.js`                                |
+| **dotenv**             | ^17.2.4                     | Loads `.env` file into `process.env`   | Secret management                                 | `server.js`, `app.js`                   |
+| **React**              | ^19.2.0                     | Frontend SPA framework                 | Component-based UI                                | `main.jsx`, all page/component files    |
+| **react-router-dom**   | ^7.13.0                     | Client-side routing                    | Multi-page SPA navigation                         | `App.jsx`, `Navbar.jsx`, all pages      |
+| **Recharts**           | ^3.7.0                      | Chart rendering library                | Bar, Pie/Donut, Area charts in Dashboard          | `Dashboard.jsx`                         |
+| **axios** (frontend)   | ^1.13.5                     | HTTP client with interceptors          | All API calls from frontend                       | `api.js`                                |
+| **Vite**               | ^7.2.4                      | Build tool and dev server              | Fast bundling and HMR                             | `vite.config.js`                        |
+| **Tailwind CSS**       | ^4.1.18                     | Utility-first CSS framework            | All UI styling                                    | `index.css`, all JSX files              |
+| **nodemon** (dev)      | ^3.1.11                     | Auto-restart on file changes           | Development convenience                           | Dev script in `package.json`            |
 
 > **NOTE:** `@tailwindcss/vite` is used as a Vite plugin, not the traditional PostCSS setup. This is the Tailwind v4 integration approach.
 
@@ -171,6 +171,7 @@ Small Indian food stalls and snack shops typically manage billing with paper and
 **Who uses it?**
 
 Exactly two types of users, enforced at the schema level:
+
 - **Owner** (`role: "owner"`) — has access to Dashboard (analytics), Billing, and Orders
 - **Staff** (`role: "staff"`) — has access to Billing and Orders only
 
@@ -181,16 +182,19 @@ Both roles log in with an email (called "POS ID" in the UI) and password. There 
 A single snack stall serving 7 hardcoded items: Tea/Coffee (₹15), Pakoda (₹25), Samosa (₹15), Kachori (₹20), Pav Bhaji (₹60), Vada Pav (₹25), and Sandwich (₹40). These are Indian street food items, priced for a small stall.
 
 **What can an owner do?** (verified from `Navbar.jsx`, `dashboardRoutes.js`)
+
 - View Dashboard analytics: today's earnings, monthly earnings, last 7 days trend, top-selling items, peak hours, payment status, top revenue generators
 - Create billing orders (Billing page)
 - Manage orders: mark paid, undo payment, delete unpaid orders
 
 **What can a staff member do?** (verified from `Navbar.jsx`, `orderRoutes.js`)
+
 - Create billing orders (Billing page)
 - View and manage orders: mark paid, undo payment, delete unpaid orders
 - Staff CANNOT access Dashboard (owner-only API, returns 403)
 
 **What happens during a typical sale?**
+
 1. Staff opens the Billing page and sees 7 snack cards
 2. Staff enters quantities in number inputs for each item
 3. The subtotal is computed live as quantities change
@@ -203,6 +207,7 @@ A single snack stall serving 7 hardcoded items: Tea/Coffee (₹15), Pakoda (₹2
 **IMPORTANT INCONSISTENCY FOUND:** `BillSummary.jsx` displays a 5% tax and shows the total including tax to the user on screen. However, `Billing.jsx` sends `totalAmount: subtotal` (the pre-tax amount) to the backend. The `totalAmount` stored in MongoDB does NOT include the 5% tax displayed on screen. This is a real bug/inconsistency in the implementation.
 
 **What business information does the application track?**
+
 - All orders with their exact items, quantities, prices, and timestamps
 - Payment status (paid vs. pending) per order
 - Which user created each order (`createdBy` reference to User)
@@ -214,6 +219,7 @@ A single snack stall serving 7 hardcoded items: Tea/Coffee (₹15), Pakoda (₹2
 **How does the analytics system provide value?**
 
 The owner sees a Dashboard (owner-only) showing:
+
 - Today's paid earnings
 - This month's paid earnings
 - Total and pending order counts
@@ -380,6 +386,7 @@ BACKGROUND JOB (In-process, same Node.js server)
 ## Layer Responsibilities
 
 ### Frontend Layer
+
 **What:** React 19 SPA, Vite-built, Tailwind-styled, hosted on Vercel
 **Files:** `main.jsx`, `App.jsx`, `pages/`, `components/`, `api/api.js`
 **Data In:** User interactions (clicks, form inputs)
@@ -387,6 +394,7 @@ BACKGROUND JOB (In-process, same Node.js server)
 **Data Out:** HTTP requests with JWT to backend
 
 ### Backend Layer
+
 **What:** Node.js + Express 5 REST API, hosted on Render
 **Files:** `server.js`, `src/app.js`, `src/controllers/`, `src/routes/`, `src/middleware/`
 **Data In:** HTTP requests with JWT tokens and JSON bodies
@@ -394,6 +402,7 @@ BACKGROUND JOB (In-process, same Node.js server)
 **Data Out:** JSON responses, Telegram HTTP requests
 
 ### Database Layer
+
 **What:** MongoDB Atlas (cloud), accessed via Mongoose
 **Files:** `src/models/User.js`, `src/models/Order.js`, `src/config/db.js`
 **Data In:** Mongoose model operations (create, find, save, deleteOne)
@@ -401,6 +410,7 @@ BACKGROUND JOB (In-process, same Node.js server)
 **Data Out:** Mongoose documents / JavaScript objects
 
 ### Authentication Layer
+
 **What:** JWT-based stateless authentication
 **Files:** `src/utils/generateToken.js`, `src/middleware/authMiddleware.js`
 **Data In:** Bearer token in Authorization header
@@ -408,6 +418,7 @@ BACKGROUND JOB (In-process, same Node.js server)
 **Data Out:** `req.user` object attached for downstream use
 
 ### Authorization Layer
+
 **What:** Role-based access control (owner vs. staff)
 **Files:** `src/middleware/roleMiddleware.js`
 **Data In:** `req.user.role`
@@ -415,6 +426,7 @@ BACKGROUND JOB (In-process, same Node.js server)
 **Data Out:** `next()` or 403 response
 
 ### Analytics Layer
+
 **What:** JavaScript-computed business metrics
 **Files:** `src/controllers/dashboardController.js`, `src/services/dashboard_summary_service.js`
 **Data In:** All orders from MongoDB (`Order.find()`)
@@ -422,6 +434,7 @@ BACKGROUND JOB (In-process, same Node.js server)
 **Data Out:** JSON with todayEarnings, monthlyEarnings, last7Days, topSnacks, peakHours, paymentStatus, topRevenueItems
 
 ### Automation Layer
+
 **What:** Scheduled nightly reporting
 **Files:** `src/jobs/daily_summary_job.js`, `src/services/telegram_service.js`
 **Data In:** Time trigger (10 PM IST), MongoDB orders
@@ -437,6 +450,7 @@ BACKGROUND JOB (In-process, same Node.js server)
 **NOT APPLICABLE.** Registration is deliberately disabled.
 
 The `registerUser` function exists in `authController.js` but is entirely commented out. The comment explains:
+
 > "Registration is disabled because SnackTrack uses pre-seeded owner/staff accounts (no self-signup needed). Security risk: the endpoint accepted a 'role' field from the request body, meaning anyone could POST { role: 'owner' } and gain full owner access."
 
 The route `router.post("/register", registerUser)` is also commented out in `authRoutes.js`.
@@ -594,6 +608,7 @@ Frontend receives 201 response
 ```
 
 **CRITICAL INCONSISTENCY:** `BillSummary` displays `total = subtotal + 5% tax` to the user. But `Billing.jsx` sends `totalAmount: subtotal` to the backend. MongoDB stores the pre-tax amount. This means:
+
 - What the customer sees on screen (with tax) ≠ what is recorded in the database (without tax)
 - Analytics in Dashboard show pre-tax totals
 - This is a real implementation inconsistency you must be able to explain honestly in interviews
@@ -738,6 +753,7 @@ try {
 **WHERE:** `authMiddleware.js` (protect), `generateToken.js`, `authController.js`
 
 **HOW:**
+
 - Login: `authController.loginUser` verifies credentials, calls `generateToken(user._id)` which calls `jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: "7d" })`
 - JWT payload: only `{ id: userId, iat, exp }` — no role, no email
 - Token stored: `localStorage.setItem("token", data.token)` — in browser localStorage
@@ -762,13 +778,16 @@ try {
 **WHERE:** `roleMiddleware.js` (authorize), `orderRoutes.js`, `dashboardRoutes.js`, `Navbar.jsx` (frontend UI)
 
 **HOW:**
+
 ```
 authorize(...roles) — higher-order function
   returns middleware(req, res, next):
     if roles.includes(req.user.role) → next()
     else → 403 "Access denied: insufficient permissions"
 ```
+
 Route usage:
+
 - `router.get("/summary", protect, authorize("owner"), getDashboardSummary)` — owner only
 - `router.post("/", protect, authorize("owner", "staff"), createOrder)` — both
 
@@ -786,6 +805,7 @@ Role stored in: MongoDB `User.role` field, JWT payload does NOT contain role. Th
 | Dashboard Summary | ✅ | ❌ (403) |
 
 **KNOWN GAPS:**
+
 1. Order deletion is not scoped to the creator — staff can delete any order, not just their own
 2. No frontend route guards — staff CAN navigate to `/dashboard` URL but gets API error
 3. Registration was disabled (correctly) because it allowed self-assigning `role: "owner"`
@@ -798,10 +818,12 @@ Role stored in: MongoDB `User.role` field, JWT payload does NOT contain role. Th
 **WHAT:** Allows staff to create an order from a hardcoded menu.
 
 **WHERE:**
+
 - Frontend: `Billing.jsx`, `SnackCard.jsx`, `BillSummary.jsx`, `data/snacks.js`
 - Backend: `orderController.js` (`createOrder`), `Order.js` model
 
 **CRITICAL DETAIL — HARDCODED MENU:** The menu is NOT stored in MongoDB. The 7 snack items are hardcoded in `frontend/src/data/snacks.js`. This means:
+
 - No product management feature exists
 - Prices cannot be changed without editing source code and redeploying
 - Adding a new item requires a code change
@@ -819,6 +841,7 @@ Role stored in: MongoDB `User.role` field, JWT payload does NOT contain role. Th
 **WHERE:** `Orders.jsx`, `orderController.js`, `orderRoutes.js`
 
 **HOW:**
+
 - `getOrders`: `Order.find().sort({ createdAt: -1 }).populate("createdBy", "email role")` — all orders, newest first, with creator info
 - `markOrderPaid`: finds order by `_id`, sets `paymentDone = true`, saves
 - `undoPayment`: finds order, sets `paymentDone = false`, saves
@@ -857,6 +880,7 @@ Role stored in: MongoDB `User.role` field, JWT payload does NOT contain role. Th
 **WHERE:** `App.jsx`, `Navbar.jsx`, all JSX files (Tailwind `dark:` classes)
 
 **HOW:**
+
 - `App.jsx`: `const [darkMode, setDarkMode] = useState(() => { const saved = localStorage.getItem('darkMode'); return saved ? JSON.parse(saved) : false; })`
 - `useEffect` applies/removes `dark` class on `document.body`
 - `localStorage.setItem('darkMode', JSON.stringify(darkMode))` persists choice
@@ -870,22 +894,28 @@ Role stored in: MongoDB `User.role` field, JWT payload does NOT contain role. Th
 ## Complete Billing Flow Analysis
 
 ### Where products come from
+
 `frontend/src/data/snacks.js` — a static JavaScript file with 7 hardcoded objects. No database involvement. The menu is fixed at build time.
 
 ### How cart state is stored
+
 In `Billing.jsx`:
+
 ```javascript
 const [quantities, setQuantities] = useState({});
 // Structure: { 1: 2, 3: 5 } — snackId → quantity
 ```
+
 This is local component state. If the user navigates away, the cart is lost.
 
 ### How prices are determined
+
 Prices come from `snacks.js` (hardcoded). The frontend is the source of truth for prices. The backend does NOT have a product catalog or price list.
 
 ### How totals are calculated
 
 **Frontend (display only):**
+
 ```
 subtotal = snacks.reduce((sum, snack) => sum + snack.price * (quantities[snack.id] || 0), 0)
 tax = subtotal * 0.05               ← 5% tax (BillSummary.jsx)
@@ -893,11 +923,13 @@ displayedTotal = subtotal + tax     ← shown to user on screen
 ```
 
 **What is sent to backend:**
+
 ```
 totalAmount: subtotal   ← PRE-TAX amount (NOT the displayed total)
 ```
 
 **Backend (stored in MongoDB):**
+
 ```
 order.totalAmount = subtotal (from request body)
 order.items[i].total = item.price * item.qty (calculated in frontend, sent to backend)
@@ -906,18 +938,23 @@ order.items[i].total = item.price * item.qty (calculated in frontend, sent to ba
 **The inconsistency:** The user sees a total that includes 5% tax on the BillSummary screen. But the backend stores and uses the pre-tax subtotal. Dashboard analytics therefore show pre-tax revenue.
 
 ### Whether tax exists
+
 Tax is calculated and **displayed** in `BillSummary.jsx` (5% hardcoded as `TAX_RATE = 0.05`). But it is **NOT stored in the database** because `Billing.jsx` sends `totalAmount: subtotal` (not `subtotal + tax`). This is a genuine inconsistency.
 
 ### Whether discounts exist
+
 **NOT VERIFIED FROM THE CODEBASE.** No discount logic found anywhere.
 
 ### How payment type is selected
+
 **NOT VERIFIED FROM THE CODEBASE.** There is no payment method selection in the UI or backend. No UPI, cash, card, or other payment type is recorded. Only a boolean `paymentDone` flag exists.
 
 ### How order is persisted
+
 `Order.create({ items, totalAmount, orderId, createdBy: req.user._id })` — a single MongoDB write with no transactions.
 
 ### Whether inventory is updated
+
 **NOT VERIFIED FROM THE CODEBASE.** No inventory model exists. No stock decrement on order creation.
 
 ---
@@ -977,18 +1014,23 @@ Tax is calculated and **displayed** in `BillSummary.jsx` (5% hardcoded as `TAX_R
 ## Order Schema (Verified from `Order.js`)
 
 ```javascript
-const orderSchema = new mongoose.Schema({
-    items: [{
-        name:  { type: String, required: true },   // snack name as string
-        qty:   { type: Number, required: true },   // quantity ordered
-        price: { type: Number, required: true },   // price per unit
-        total: { type: Number, required: true }    // qty * price
-    }],
-    totalAmount: { type: Number, required: true },  // sum of all item totals (pre-tax)
-    orderId:     { type: Number },                  // sequential per-day counter
+const orderSchema = new mongoose.Schema(
+  {
+    items: [
+      {
+        name: { type: String, required: true }, // snack name as string
+        qty: { type: Number, required: true }, // quantity ordered
+        price: { type: Number, required: true }, // price per unit
+        total: { type: Number, required: true }, // qty * price
+      },
+    ],
+    totalAmount: { type: Number, required: true }, // sum of all item totals (pre-tax)
+    orderId: { type: Number }, // sequential per-day counter
     paymentDone: { type: Boolean, default: false }, // payment status
-    createdBy:   { type: mongoose.Schema.Types.ObjectId, ref: "User" } // foreign key
-}, { timestamps: true }); // adds createdAt, updatedAt automatically
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // foreign key
+  },
+  { timestamps: true },
+); // adds createdAt, updatedAt automatically
 ```
 
 **Why `orderId` is not required:** Comment in the code: "Removed to allow updating old orders without IDs." This means some older records may not have an `orderId`. The UI shows `order.orderId || "N/A"`.
@@ -1000,36 +1042,46 @@ const orderSchema = new mongoose.Schema({
 ## Order APIs — Internal Behavior
 
 ### POST /api/orders (Create Order)
+
 **Request:** `{ items: [{ name, qty, price, total }], totalAmount }`
 **Auth:** protect + authorize("owner", "staff")
 **Business Logic:**
+
 1. Empty items array → 400
 2. Find today's last order by `createdAt` range → determine `orderId`
 3. `Order.create({ items, totalAmount, orderId, createdBy: req.user._id })`
 4. Returns 201 with full order document
 
 ### GET /api/orders (Get All Orders)
+
 **Auth:** protect + authorize("owner", "staff")
 **Business Logic:**
+
 - `Order.find().sort({ createdAt: -1 }).populate("createdBy", "email role")`
 - Returns all orders, newest first, with creator email and role (password excluded)
 - Returns all orders from all time — no pagination, no date filtering
 
 ### PATCH /api/orders/:id/pay (Mark Paid)
+
 **Auth:** protect + authorize("owner", "staff")
 **Business Logic:**
+
 1. `Order.findById(req.params.id)` → 404 if not found
 2. `order.paymentDone = true; await order.save()`
 
 ### PATCH /api/orders/:id/unpay (Undo Payment)
+
 **Auth:** protect + authorize("owner", "staff")
 **Business Logic:** Same as pay but sets `paymentDone = false`
 
 ### DELETE /api/orders/:id
+
 **Auth:** protect + authorize("owner", "staff")
 **Business Logic:**
+
 1. `Order.findById(req.params.id)` → 404 if not found
 2. `await order.deleteOne()`
+
 - Note: No check for `paymentDone` status — backend would delete ANY order. Frontend only shows the delete button for unpaid orders, but this is not enforced server-side.
 
 ---
@@ -1043,10 +1095,12 @@ const orderSchema = new mongoose.Schema({
 **What "payment tracking" actually is:**
 
 A boolean flag (`paymentDone`) on each Order document that staff manually toggle:
+
 - `paymentDone: false` → Pending (yellow badge, "⏳ Pending")
 - `paymentDone: true` → Paid (green badge, "✓ Paid")
 
 **What payment information is NOT recorded:**
+
 - Payment method (cash, UPI, card) — NOT captured
 - Transaction ID — NOT captured
 - Who collected payment — NOT captured (only who created the order via `createdBy`)
@@ -1076,6 +1130,7 @@ Fields:
 ```
 
 **Schema-level behaviors:**
+
 - `unique: true` on email — MongoDB creates a unique index automatically
 - `lowercase: true` — email is forced to lowercase before save
 - `pre("save")` hook — hashes password before saving to DB (only if `isModified("password")`)
@@ -1130,6 +1185,7 @@ createdAt: timestamp               { name: "Tea",    qty: 1, price: 15, total: 1
 "The main trade-off is that there's no ACID transaction support across multiple documents by default. If I needed to update inventory when an order is created, and the inventory update fails, I'd have an inconsistent state. MongoDB does support multi-document transactions with replica sets, but they add complexity. Also, since I'm using `Order.find()` for analytics, as the orders collection grows, this query gets slow. With PostgreSQL, I'd have more powerful query planner optimizations and better support for complex aggregations with JOINs across normalized tables."
 
 **Q: What validations are handled at schema level?**
+
 - `email`: required, unique, lowercase, trim
 - `password`: required, minlength 6
 - `role`: enum validation (only "owner" or "staff" accepted)
@@ -1137,10 +1193,12 @@ createdAt: timestamp               { name: "Tea",    qty: 1, price: 15, total: 1
 - `totalAmount`: required
 
 **Q: Which queries may become slow?**
+
 - `Order.find()` in `dashboardController.js` — full collection scan, no filter
 - `Order.find({ createdAt: ... })` for today's orders in `createOrder` — benefits from an index on `createdAt`
 
 **Q: What indexes would be useful?**
+
 - `{ createdAt: -1 }` — for sorting and date-range queries
 - `{ paymentDone: 1, createdAt: -1 }` — compound index for filtering paid orders by date
 - `{ createdBy: 1 }` — if querying orders by staff member
@@ -1168,54 +1226,68 @@ createdAt: timestamp               { name: "Tea",    qty: 1, price: 15, total: 1
 ## Operations Actually Used in SnackTrack
 
 ### `User.findOne({ email })` — in `authController.js`
+
 **Question asked:** "Find the one user whose email matches the login input."
+
 ```javascript
 const user = await User.findOne({ email });
 // Returns: null if not found, User document if found
 ```
 
 ### `User.findById(decoded.id).select("-password")` — in `authMiddleware.js`
+
 **Question asked:** "Find the user with this MongoDB ObjectId, but don't return the password field."
+
 ```javascript
 req.user = await User.findById(decoded.id).select("-password");
 ```
+
 The `.select("-password")` uses MongoDB projection to exclude sensitive fields.
 
 ### `Order.create({ items, totalAmount, orderId, createdBy })` — in `createOrder`
+
 **Question asked:** "Insert a new order document into the orders collection."
 Equivalent to `new Order({...}).save()` but shorter.
 
 ### `Order.find()` — in `dashboardController.js`
+
 **Question asked:** "Give me all documents in the orders collection."
+
 ```javascript
-const orders = await Order.find();  // Returns array of all Order documents
+const orders = await Order.find(); // Returns array of all Order documents
 ```
 
 ### `Order.find().sort({ createdAt: -1 }).populate("createdBy", "email role")` — in `getOrders`
+
 **Question asked:** "Give me all orders, sorted newest first, and instead of just the ObjectId in createdBy, give me the email and role of that user."
 `.populate()` replaces the ObjectId reference with actual document data from the `users` collection.
 
 ### `Order.findById(req.params.id)` — in `markOrderPaid`, `undoPayment`, `deleteOrder`
+
 **Question asked:** "Find the single order with this specific ObjectId."
 
 ### `order.save()` — after modifying `paymentDone`
+
 Persists changes to an existing document back to MongoDB.
 
 ### `order.deleteOne()` — in `deleteOrder`
+
 Removes the document from the collection.
 
 ### `Order.find({ paymentDone: true, createdAt: { $gte: start, $lte: end } })` — in `buildDailySummary`
+
 **Question asked:** "Find all orders that are paid AND were created today."
 `$gte` (greater than or equal) and `$lte` (less than or equal) are MongoDB comparison operators.
 
 ### `Order.countDocuments({ paymentDone: false, ... })` — in `buildDailySummary`
+
 **Question asked:** "Count (don't return) how many orders are pending today."
 
 ---
 
 ## Important: No Aggregation Pipelines Used
 
-**CRITICAL FOR INTERVIEWS:** The analytics in SnackTrack do NOT use MongoDB's `$aggregate` pipeline. All computation happens in JavaScript in the Node.js process after loading data with `Order.find()`. 
+**CRITICAL FOR INTERVIEWS:** The analytics in SnackTrack do NOT use MongoDB's `$aggregate` pipeline. All computation happens in JavaScript in the Node.js process after loading data with `Order.find()`.
 
 This is a deliberate trade-off (developer familiarity) but is not scalable. Know how to explain this honestly and describe the aggregation pipeline alternative.
 
@@ -1277,6 +1349,7 @@ A JWT has three base64url-encoded parts separated by dots:
 **Header:** `{ "alg": "HS256", "typ": "JWT" }` — algorithm and type
 
 **Payload (in SnackTrack):** `{ "id": "64b3f2a...", "iat": 1693..., "exp": 1694... }`
+
 - `id` is the MongoDB `_id` string of the user
 - `iat` = issued at timestamp
 - `exp` = expiration timestamp (iat + 7 days)
@@ -1314,13 +1387,17 @@ Registration is disabled. Accounts are pre-seeded directly in MongoDB. There is 
 ## The authorize() Middleware — Explained
 
 ```javascript
-const authorize = (...roles) => {     // "owner" or ["owner", "staff"]
-    return (req, res, next) => {       // returns actual middleware function
-        if (!roles.includes(req.user.role)) {
-            return res.status(403).json({ message: "Access denied: insufficient permissions" });
-        }
-        next();
-    };
+const authorize = (...roles) => {
+  // "owner" or ["owner", "staff"]
+  return (req, res, next) => {
+    // returns actual middleware function
+    if (!roles.includes(req.user.role)) {
+      return res
+        .status(403)
+        .json({ message: "Access denied: insufficient permissions" });
+    }
+    next();
+  };
 };
 ```
 
@@ -1329,17 +1406,23 @@ This is a **higher-order function** — a function that returns a function. The 
 ## Frontend vs Backend Authorization
 
 **Frontend role-hiding** (in `Navbar.jsx`):
+
 ```javascript
-const role = localStorage.getItem('role');
-const isOwner = role === 'owner';
-{isOwner && <Link to="/dashboard">Dashboard</Link>}
+const role = localStorage.getItem("role");
+const isOwner = role === "owner";
+{
+  isOwner && <Link to="/dashboard">Dashboard</Link>;
+}
 ```
+
 This hides the link from staff — but it is NOT security. It's only UX.
 
 **Backend authorization** (in `dashboardRoutes.js`):
+
 ```javascript
 router.get("/summary", protect, authorize("owner"), getDashboardSummary);
 ```
+
 This is the actual security. Even if a staff member guesses the URL and calls the API directly, the `authorize("owner")` middleware rejects with 403.
 
 ## Interview Question: Can staff call owner-only APIs?
@@ -1353,129 +1436,156 @@ This is the actual security. Even if a staff member guesses the URL and calls th
 ## All Metrics — Verified from `dashboardController.js`
 
 ### Metric 1: Today's Earnings
+
 **Definition:** Sum of `totalAmount` across all PAID orders created today
 **Source:** `buildDailySummary()` in `dashboard_summary_service.js`
 **Calculation:**
+
 ```javascript
 const paidOrders = await Order.find({
-    paymentDone: true,
-    createdAt: { $gte: todayStart, $lte: todayEnd }
+  paymentDone: true,
+  createdAt: { $gte: todayStart, $lte: todayEnd },
 });
 todayEarnings = paidOrders.reduce((sum, order) => sum + order.totalAmount, 0);
 ```
+
 **Output:** Single number (₹)
 **Chart:** Stat card (violet gradient)
 **Edge case:** No orders → 0
 
 ### Metric 2: Monthly Earnings
+
 **Definition:** Sum of `totalAmount` across all PAID orders in the current calendar month/year
 **Source:** `dashboardController.js`
 **Calculation:**
+
 ```javascript
 const monthlyEarnings = paidOrders
-    .filter(o => {
-        const d = new Date(o.createdAt);
-        return d.getMonth() === month && d.getFullYear() === year;
-    })
-    .reduce((sum, o) => sum + o.totalAmount, 0);
+  .filter((o) => {
+    const d = new Date(o.createdAt);
+    return d.getMonth() === month && d.getFullYear() === year;
+  })
+  .reduce((sum, o) => sum + o.totalAmount, 0);
 ```
+
 Note: `paidOrders` here is ALL paid orders (loaded with `Order.find()`), then filtered in JS.
 **Output:** Single number (₹)
 **Chart:** Stat card (cyan gradient)
 
 ### Metric 3: Total Paid Orders (Count)
+
 **Definition:** Count of today's paid orders
 **Source:** `buildDailySummary()` — `paidOrders.length`
 **Chart:** Stat card (amber gradient) — also shows pending count sub-label
 
 ### Metric 4: Average Order Value
+
 **Definition:** Today's earnings divided by today's paid orders
 **Source:** `Dashboard.jsx` (computed client-side)
 **Calculation:**
+
 ```javascript
-const avgOrderValue = totalOrders > 0 ? Math.round(stats.todayEarnings / stats.totalPaidOrders) : 0;
+const avgOrderValue =
+  totalOrders > 0 ? Math.round(stats.todayEarnings / stats.totalPaidOrders) : 0;
 ```
+
 **Note:** This divides today's earnings by today's paid orders, which is correct AOV for today.
 **Chart:** Stat card (emerald gradient)
 
 ### Metric 5: Last 7 Days Earnings
+
 **Definition:** Daily paid earnings for each of the past 7 days
 **Calculation:**
+
 ```javascript
 for (let i = 6; i >= 0; i--) {
-    const d = new Date(); d.setDate(d.getDate() - i);
-    const dayStr = d.toDateString();
-    const label = d.toLocaleDateString("en-US", { weekday: "short" });
-    const earnings = paidOrders
-        .filter(o => new Date(o.createdAt).toDateString() === dayStr)
-        .reduce((sum, o) => sum + o.totalAmount, 0);
-    last7Days.push({ day: label, earnings });
+  const d = new Date();
+  d.setDate(d.getDate() - i);
+  const dayStr = d.toDateString();
+  const label = d.toLocaleDateString("en-US", { weekday: "short" });
+  const earnings = paidOrders
+    .filter((o) => new Date(o.createdAt).toDateString() === dayStr)
+    .reduce((sum, o) => sum + o.totalAmount, 0);
+  last7Days.push({ day: label, earnings });
 }
 ```
+
 **Limitation:** Uses string comparison (`toDateString()`) for date matching — timezone issues could occur if server timezone differs from Asia/Kolkata.
 **Output:** Array of 7 `{ day, earnings }` objects
 **Chart:** `<BarChart>` with gradient bars
 
 ### Metric 6: Top Selling Snacks (by quantity)
+
 **Definition:** Top 6 snacks by total quantity sold across all-time paid orders
 **Calculation:**
+
 ```javascript
 const snackMap = {};
-paidOrders.forEach(o => {
-    o.items.forEach(item => {
-        snackMap[item.name] = (snackMap[item.name] || 0) + item.qty;
-    });
+paidOrders.forEach((o) => {
+  o.items.forEach((item) => {
+    snackMap[item.name] = (snackMap[item.name] || 0) + item.qty;
+  });
 });
 const topSnacks = Object.entries(snackMap)
-    .map(([name, qty]) => ({ name, qty }))
-    .sort((a, b) => b.qty - a.qty)
-    .slice(0, 6);
+  .map(([name, qty]) => ({ name, qty }))
+  .sort((a, b) => b.qty - a.qty)
+  .slice(0, 6);
 ```
+
 **Output:** Array of `{ name, qty }` sorted by qty descending
 **Chart:** `<PieChart>` donut (innerRadius=40, outerRadius=80)
 
 ### Metric 7: Peak Hours
+
 **Definition:** Count of paid orders per hour (8 AM to 10 PM)
 **Calculation:**
+
 ```javascript
 const hourMap = {};
 for (let h = 8; h <= 22; h++) hourMap[h] = 0;
-paidOrders.forEach(o => {
-    const h = new Date(o.createdAt).getHours();
-    if (hourMap[h] !== undefined) hourMap[h]++;
+paidOrders.forEach((o) => {
+  const h = new Date(o.createdAt).getHours();
+  if (hourMap[h] !== undefined) hourMap[h]++;
 });
 const peakHours = Object.entries(hourMap).map(([hour, orders]) => ({
-    hour: `${hour}:00`, orders
+  hour: `${hour}:00`,
+  orders,
 }));
 ```
+
 **Output:** Array of 15 `{ hour, orders }` objects
 **Chart:** `<AreaChart>` with gradient fill
 
 ### Metric 8: Payment Status
+
 **Definition:** Count of today's paid vs. pending orders
 **Source:** `buildDailySummary()` — `totalPaidOrders` and `pendingOrders`
 **Output:** `{ paid: N, pending: M }`
 **Chart:** `<PieChart>` donut
 
 ### Metric 9: Top Revenue Generators
+
 **Definition:** Top 5 items by total revenue (sum of item.total) across all-time paid orders
 **Calculation:**
+
 ```javascript
 const revenueMap = {};
-paidOrders.forEach(o => {
-    o.items.forEach(item => {
-        revenueMap[item.name] = (revenueMap[item.name] || 0) + item.total;
-    });
+paidOrders.forEach((o) => {
+  o.items.forEach((item) => {
+    revenueMap[item.name] = (revenueMap[item.name] || 0) + item.total;
+  });
 });
 const topRevenueItems = Object.entries(revenueMap)
-    .map(([name, revenue]) => ({ name, revenue }))
-    .sort((a, b) => b.revenue - a.revenue)
-    .slice(0, 5);
+  .map(([name, revenue]) => ({ name, revenue }))
+  .sort((a, b) => b.revenue - a.revenue)
+  .slice(0, 5);
 ```
+
 **Difference from Top Snacks:** Top Snacks ranks by unit quantity (how many sold). Top Revenue ranks by money earned. Tea might sell more units but Pav Bhaji (₹60) generates more revenue.
 **Chart:** Progress bars with relative widths
 
 ### Metric 10: Conversion Rate
+
 **Definition:** Percentage of total orders that are paid
 **Source:** `Dashboard.jsx` (client-side calculation)
 **Calculation:** `(stats.totalPaidOrders / totalOrders) * 100`
@@ -1496,30 +1606,38 @@ The analytics engine in SnackTrack does NOT use `$aggregate`. Instead, it uses `
 ### Top Selling Snacks (current JS vs. aggregation)
 
 **Current JS approach:**
+
 ```javascript
 const orders = await Order.find();
-const paidOrders = orders.filter(o => o.paymentDone);
+const paidOrders = orders.filter((o) => o.paymentDone);
 const snackMap = {};
-paidOrders.forEach(o => o.items.forEach(item => {
+paidOrders.forEach((o) =>
+  o.items.forEach((item) => {
     snackMap[item.name] = (snackMap[item.name] || 0) + item.qty;
-}));
+  }),
+);
 ```
 
 **Aggregation Pipeline equivalent:**
+
 ```javascript
 Order.aggregate([
-    { $match: { paymentDone: true } },           // Stage 1: filter paid orders
-    { $unwind: "$items" },                        // Stage 2: expand items array
-    { $group: {                                   // Stage 3: group by item name
-        _id: "$items.name",
-        totalQty: { $sum: "$items.qty" }
-    }},
-    { $sort: { totalQty: -1 } },                 // Stage 4: sort by qty
-    { $limit: 6 }                                // Stage 5: top 6
-])
+  { $match: { paymentDone: true } }, // Stage 1: filter paid orders
+  { $unwind: "$items" }, // Stage 2: expand items array
+  {
+    $group: {
+      // Stage 3: group by item name
+      _id: "$items.name",
+      totalQty: { $sum: "$items.qty" },
+    },
+  },
+  { $sort: { totalQty: -1 } }, // Stage 4: sort by qty
+  { $limit: 6 }, // Stage 5: top 6
+]);
 ```
 
 **Interview explanation of each stage:**
+
 - `$match`: "Give me only paid orders" — acts like a WHERE clause
 - `$unwind`: "For each order, create one document per item in its items[] array"
 - `$group`: "Collapse all documents with the same item name, summing up the qty"
@@ -1527,29 +1645,34 @@ Order.aggregate([
 - `$limit`: "Only return the top 6"
 
 ### Daily Earnings (Aggregation version)
+
 ```javascript
 Order.aggregate([
-    { $match: {
-        paymentDone: true,
-        createdAt: { $gte: todayStart, $lte: todayEnd }
-    }},
-    { $group: {
-        _id: null,
-        totalEarnings: { $sum: "$totalAmount" },
-        count: { $sum: 1 }
-    }}
-])
+  {
+    $match: {
+      paymentDone: true,
+      createdAt: { $gte: todayStart, $lte: todayEnd },
+    },
+  },
+  {
+    $group: {
+      _id: null,
+      totalEarnings: { $sum: "$totalAmount" },
+      count: { $sum: 1 },
+    },
+  },
+]);
 ```
 
 ### Why Aggregation Is Better at Scale
 
-| Aspect | Current (JS) | Aggregation Pipeline |
-|--------|-------------|---------------------|
-| Data transferred | All order documents | Only computed result (~KB) |
-| Filtering location | Node.js (after DB load) | MongoDB (before sending data) |
-| Memory usage | Entire collection in RAM | Streaming in DB engine |
-| Index usage | Full scan | Can use indexes on $match fields |
-| Scales to 100K orders | ❌ Very slow | ✅ Efficient |
+| Aspect                | Current (JS)             | Aggregation Pipeline             |
+| --------------------- | ------------------------ | -------------------------------- |
+| Data transferred      | All order documents      | Only computed result (~KB)       |
+| Filtering location    | Node.js (after DB load)  | MongoDB (before sending data)    |
+| Memory usage          | Entire collection in RAM | Streaming in DB engine           |
+| Index usage           | Full scan                | Can use indexes on $match fields |
+| Scales to 100K orders | ❌ Very slow             | ✅ Efficient                     |
 
 ---
 
@@ -1596,28 +1719,28 @@ App.jsx: root component
 
 **Pattern:** Local component state — no Redux, no Zustand, no React Context, no global state.
 
-| Component | State | What It Holds |
-|-----------|-------|---------------|
-| `App.jsx` | `darkMode` | Dark/light theme preference |
-| `Login.jsx` | `posId, password, error, isLoading` | Form fields and UI state |
-| `Billing.jsx` | `quantities, creating` | Cart state and loading flag |
-| `Orders.jsx` | `orders, loading` | Fetched orders and loading flag |
-| `Dashboard.jsx` | `stats, loading` | API response and loading flag |
-| `Navbar.jsx` | `isMenuOpen` | Mobile menu toggle |
+| Component       | State                               | What It Holds                   |
+| --------------- | ----------------------------------- | ------------------------------- |
+| `App.jsx`       | `darkMode`                          | Dark/light theme preference     |
+| `Login.jsx`     | `posId, password, error, isLoading` | Form fields and UI state        |
+| `Billing.jsx`   | `quantities, creating`              | Cart state and loading flag     |
+| `Orders.jsx`    | `orders, loading`                   | Fetched orders and loading flag |
+| `Dashboard.jsx` | `stats, loading`                    | API response and loading flag   |
+| `Navbar.jsx`    | `isMenuOpen`                        | Mobile menu toggle              |
 
 ## API Layer — `api.js`
 
 ```javascript
 const API = axios.create({
-    baseURL: "https://snacktrack-backend-y8nw.onrender.com/api"
+  baseURL: "https://snacktrack-backend-y8nw.onrender.com/api",
 });
 
 API.interceptors.request.use((req) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-        req.headers.Authorization = `Bearer ${token}`;
-    }
-    return req;
+  const token = localStorage.getItem("token");
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+  return req;
 });
 ```
 
@@ -1626,17 +1749,22 @@ API.interceptors.request.use((req) => {
 ## Key React Concepts Used
 
 ### `useState`
+
 Used in every page/component. `Billing.jsx` uses the functional updater pattern:
+
 ```javascript
-setQuantities(prev => ({ ...prev, [snackId]: qty }));
+setQuantities((prev) => ({ ...prev, [snackId]: qty }));
 ```
+
 This is important — it reads the previous state rather than a closure-captured stale value, preventing lost updates when multiple rapid state changes happen.
 
 ### `useEffect`
+
 Used in `App.jsx` (dark mode), `Orders.jsx` (fetch on mount), `Dashboard.jsx` (fetch on mount).
+
 ```javascript
 useEffect(() => {
-    fetchOrders();
+  fetchOrders();
 }, []); // empty dep array = run once on mount
 ```
 
@@ -1647,9 +1775,11 @@ useEffect(() => {
 This is a UI bug: after submitting an order and navigating back to Billing, the number inputs might not reset to 0 if the component doesn't unmount and remount.
 
 ### Derived State
+
 `subtotal` in `Billing.jsx` is not stored in state — it's computed on every render from `quantities`. This is correct design: derived data should not be stored separately, which prevents consistency bugs.
 
 ### Fetch-on-Action Pattern
+
 `Orders.jsx` fetches orders on mount and re-fetches after every mutation (markPaid, undoPay, delete). There's no real-time update (no WebSockets, no polling).
 
 ---
@@ -1659,19 +1789,23 @@ This is a UI bug: after submitting an order and navigating back to Billing, the 
 ## Complete Implementation Details
 
 ### Library Used
+
 `axios` (already installed as a backend dependency) for HTTP POST to Telegram Bot API. **No Telegram SDK/library** is used — it's a direct HTTP call.
 
 ### Bot Configuration
+
 - Bot token: stored in `process.env.TELEGRAM_BOT_TOKEN` (loaded from `.env` file)
 - Chat ID (recipient): stored in `process.env.TELEGRAM_CHAT_ID`
 - Both are hardcoded per-environment — there's no multi-owner support
 
 ### Trigger Mechanism
+
 `node-cron` — an in-process scheduler. The job is registered when `server.js` imports `./src/jobs/daily_summary_job.js`.
 
 **Cron expression:** `"0 22 * * *"` = every day at 22:00 (10 PM) in `timezone: "Asia/Kolkata"` (IST)
 
 ### Nodemon Duplicate Prevention
+
 ```javascript
 if (global.dailySummaryJobStarted) {
     console.log("Daily summary job already running");
@@ -1680,9 +1814,11 @@ if (global.dailySummaryJobStarted) {
     cron.schedule(...);
 }
 ```
+
 Without this, nodemon restarts during development would register the cron job multiple times, causing multiple messages at 10 PM.
 
 ### Message Format
+
 ```
 🙏 Namasthe Boss
 
@@ -1696,6 +1832,7 @@ Good night 🌙
 ```
 
 ### Error Handling — Current
+
 ```javascript
 try {
     await sendTelegramMessage(message);
@@ -1706,9 +1843,11 @@ try {
 try { await axios.post(...) }
 catch (err) { console.error(...) }
 ```
+
 Error is logged. No retry. No alerting. If Telegram is down at 10 PM, the message is lost forever.
 
 ### Test Route
+
 `GET /api/dashboard/test-daily-summary` — sends a test message "🧪 Test: Daily summary working!" to verify connectivity. This route has NO authentication — anyone can call it.
 
 ## Interview Questions — Prepared Answers
@@ -1735,40 +1874,47 @@ Error is logged. No retry. No alerting. If Telegram is down at 10 PM, the messag
 ## Current Security Measures (Verified)
 
 ### 1. Password Hashing — bcryptjs
+
 **Where:** `User.js` `pre("save")` hook and `matchPassword()` method
 **How:** `bcrypt.genSalt(10)` + `bcrypt.hash(password, salt)` before saving. `bcrypt.compare(entered, hashed)` for verification.
 **What it prevents:** Plaintext password storage. If the database is breached, attackers get only hashes. bcrypt is deliberately slow (10 salt rounds ≈ 100ms per hash), making brute-force impractical.
 **Limitation:** 10 rounds was the 2013 recommendation. 12-14 is better today for stronger protection.
 
 ### 2. JWT Authentication
+
 **Where:** `authMiddleware.js`, `generateToken.js`
 **How:** Signed with `HS256` algorithm using `JWT_SECRET`. `jwt.verify()` throws on tampered or expired tokens.
 **What it prevents:** Request forgery from unauthenticated users.
 **Limitation:** Token in localStorage (XSS risk). No revocation. Weak JWT_SECRET in current `.env` (`snacktrack_super_secret_key_123`).
 
 ### 3. Helmet
+
 **Where:** `app.js` — `app.use(helmet({ crossOriginResourcePolicy: false }))`
 **How:** Sets 11 HTTP security headers including `X-Content-Type-Options`, `X-Frame-Options`, `Strict-Transport-Security`, `X-XSS-Protection`, etc.
 **What it prevents:** Clickjacking, MIME sniffing, XSS, content injection, and several other browser-based attacks.
 **Limitation:** `crossOriginResourcePolicy: false` disables the CORP header to allow CORS. This is a deliberate trade-off, not a vulnerability.
 
 ### 4. CORS Configuration
+
 **Where:** `app.js` — `app.use(cors({ origin: [...], credentials: true }))`
 **Allowed origins:** `http://localhost:5173` (dev) and `https://snack-track-theta.vercel.app` (production)
 **What it prevents:** Other websites from making cross-origin API calls on behalf of authenticated users.
 **Limitation:** Only prevents browser-based cross-origin requests. Does not stop direct API calls from curl, Postman, or server-side code.
 
 ### 5. Rate Limiting
+
 **Where:** `app.js` — `app.use("/api", limiter)` applied to all `/api` routes
 **Config:** 100 requests per 15 minutes per IP. Uses `standardHeaders: true`, `legacyHeaders: false`.
 **What it prevents:** Brute-force login attacks, DoS via rapid API calls.
 **Limitation:** Applied to ALL `/api` routes equally. The login endpoint (`/api/auth/login`) should have a stricter limit (e.g., 5/minute). A single bad actor could use up 100 requests attacking the login before being blocked.
 
 ### 6. Role-Based Access Control
+
 **Where:** `roleMiddleware.js` — `authorize("owner")` on dashboard routes
 **What it prevents:** Staff from accessing owner-only analytics.
 
 ### 7. Environment Variables
+
 **Where:** `.env` file + `dotenv` in `server.js`
 **What it prevents:** Secrets hard-coded in source code.
 **Limitation:** `.env` file exists in the local repo with real credentials. If ever pushed to Git (the `.gitignore` should prevent this), credentials would be exposed. The current `.env` contains real MongoDB connection string and Telegram bot token.
@@ -1809,6 +1955,7 @@ Error is logged. No retry. No alerting. If Telegram is down at 10 PM, the messag
 **Where configured:** `app.js` — `app.use(helmet({ crossOriginResourcePolicy: false }))`
 
 **Headers it sets (key ones):**
+
 - `Content-Security-Policy` — restricts what resources can load
 - `X-Frame-Options: SAMEORIGIN` — prevents clickjacking (site in iframe)
 - `X-Content-Type-Options: nosniff` — prevents MIME type sniffing
@@ -1829,14 +1976,15 @@ Error is logged. No retry. No alerting. If Telegram is down at 10 PM, the messag
 **Where configured:** `app.js` — `app.use(cors({ origin: [...], credentials: true }))`
 
 **Configuration in SnackTrack:**
+
 ```javascript
 cors({
-    origin: [
-        "http://localhost:5173",                    // dev
-        "https://snack-track-theta.vercel.app"      // prod
-    ],
-    credentials: true
-})
+  origin: [
+    "http://localhost:5173", // dev
+    "https://snack-track-theta.vercel.app", // prod
+  ],
+  credentials: true,
+});
 ```
 
 **What it prevents:** If a malicious site `evil.com` tries to make AJAX calls to your API while a user is logged in, the browser will block the response because `evil.com` is not in the allowed origins list.
@@ -1855,13 +2003,14 @@ cors({
 **What is it?** A middleware that counts requests per IP and rejects excess ones.
 
 **Where configured:** `app.js`
+
 ```javascript
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,   // 15 minutes
-    max: 100,                    // 100 requests per IP per window
-    message: "Too many requests from this IP, please try again after 15 minutes",
-    standardHeaders: true,
-    legacyHeaders: false,
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // 100 requests per IP per window
+  message: "Too many requests from this IP, please try again after 15 minutes",
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 app.use("/api", limiter);
 ```
@@ -1875,32 +2024,32 @@ app.use("/api", limiter);
 
 # 19. COMPLETE API REFERENCE
 
-| Method | Endpoint | Purpose | Auth | Role | Request Body | Response | Controller |
-|--------|----------|---------|------|------|-------------|----------|------------|
-| POST | `/api/auth/login` | Authenticate user | ❌ | None | `{ email, password }` | `{ token, user: { id, email, role } }` | `authController.loginUser` |
-| POST | `/api/orders` | Create new order | ✅ JWT | owner, staff | `{ items: [{ name, qty, price, total }], totalAmount }` | 201 Order document | `orderController.createOrder` |
-| GET | `/api/orders` | Get all orders | ✅ JWT | owner, staff | None | Array of orders (populated createdBy) | `orderController.getOrders` |
-| PATCH | `/api/orders/:id/pay` | Mark order as paid | ✅ JWT | owner, staff | None | Updated order document | `orderController.markOrderPaid` |
-| PATCH | `/api/orders/:id/unpay` | Mark order as unpaid | ✅ JWT | owner, staff | None | Updated order document | `orderController.undoPayment` |
-| DELETE | `/api/orders/:id` | Delete order | ✅ JWT | owner, staff | None | `{ message: "Order deleted" }` | `orderController.deleteOrder` |
-| GET | `/api/dashboard/summary` | Get all analytics data | ✅ JWT | owner only | None | Dashboard metrics JSON | `dashboardController.getDashboardSummary` |
-| GET | `/api/dashboard/test-daily-summary` | Test Telegram connectivity | ❌ | None | None | `{ ok: true }` | Inline (dashboard route) |
-| GET | `/` | Health check | ❌ | None | None | "SnackTrack API running" | Inline (app.js) |
+| Method | Endpoint                            | Purpose                    | Auth   | Role         | Request Body                                            | Response                               | Controller                                |
+| ------ | ----------------------------------- | -------------------------- | ------ | ------------ | ------------------------------------------------------- | -------------------------------------- | ----------------------------------------- |
+| POST   | `/api/auth/login`                   | Authenticate user          | ❌     | None         | `{ email, password }`                                   | `{ token, user: { id, email, role } }` | `authController.loginUser`                |
+| POST   | `/api/orders`                       | Create new order           | ✅ JWT | owner, staff | `{ items: [{ name, qty, price, total }], totalAmount }` | 201 Order document                     | `orderController.createOrder`             |
+| GET    | `/api/orders`                       | Get all orders             | ✅ JWT | owner, staff | None                                                    | Array of orders (populated createdBy)  | `orderController.getOrders`               |
+| PATCH  | `/api/orders/:id/pay`               | Mark order as paid         | ✅ JWT | owner, staff | None                                                    | Updated order document                 | `orderController.markOrderPaid`           |
+| PATCH  | `/api/orders/:id/unpay`             | Mark order as unpaid       | ✅ JWT | owner, staff | None                                                    | Updated order document                 | `orderController.undoPayment`             |
+| DELETE | `/api/orders/:id`                   | Delete order               | ✅ JWT | owner, staff | None                                                    | `{ message: "Order deleted" }`         | `orderController.deleteOrder`             |
+| GET    | `/api/dashboard/summary`            | Get all analytics data     | ✅ JWT | owner only   | None                                                    | Dashboard metrics JSON                 | `dashboardController.getDashboardSummary` |
+| GET    | `/api/dashboard/test-daily-summary` | Test Telegram connectivity | ❌     | None         | None                                                    | `{ ok: true }`                         | Inline (dashboard route)                  |
+| GET    | `/`                                 | Health check               | ❌     | None         | None                                                    | "SnackTrack API running"               | Inline (app.js)                           |
 
 ---
 
 ## Error Responses
 
-| HTTP Status | When | Example Message |
-|-------------|------|----------------|
-| 400 | Missing email/password at login | "Email and password are required" |
-| 400 | Empty items array on order creation | "Order must have items" |
-| 401 | Wrong credentials | "Invalid email or password" |
-| 401 | No JWT token | "Not authorized, no token" |
-| 401 | Invalid/expired JWT | "Not authorized, token invalid" |
-| 403 | Insufficient role (staff → dashboard) | "Access denied: insufficient permissions" |
-| 404 | Order not found by ID | "Order not found" |
-| 500 | Unhandled server error | (Express default error) |
+| HTTP Status | When                                  | Example Message                           |
+| ----------- | ------------------------------------- | ----------------------------------------- |
+| 400         | Missing email/password at login       | "Email and password are required"         |
+| 400         | Empty items array on order creation   | "Order must have items"                   |
+| 401         | Wrong credentials                     | "Invalid email or password"               |
+| 401         | No JWT token                          | "Not authorized, no token"                |
+| 401         | Invalid/expired JWT                   | "Not authorized, token invalid"           |
+| 403         | Insufficient role (staff → dashboard) | "Access denied: insufficient permissions" |
+| 404         | Order not found by ID                 | "Order not found"                         |
+| 500         | Unhandled server error                | (Express default error)                   |
 
 ---
 
@@ -1909,6 +2058,7 @@ app.use("/api", limiter);
 ## Backend Error Handling Analysis
 
 ### What's handled well:
+
 - Auth controller: manual 400/401 returns for missing/invalid inputs
 - Order controller: 404 for missing orders
 - DB connection: `process.exit(1)` if MongoDB connection fails on startup
@@ -1916,18 +2066,21 @@ app.use("/api", limiter);
 - Cron job: `try/catch` around the entire job body
 
 ### What's NOT handled:
+
 - No global Express error middleware (`app.use((err, req, res, next) => ...)`)
 - If any controller throws an unhandled exception (e.g., `Order.find()` throws due to DB timeout), Express 5 may handle it differently than Express 4 (Express 5 propagates async errors automatically), but there's no standardized error response format
 - No try/catch in most controller functions — they rely on Express 5's automatic async error forwarding
 - No Mongoose validation error formatting — if `Order.create()` fails validation, the raw Mongoose error would bubble up
 
 ### Frontend Error Handling:
+
 - `Login.jsx`: `setError(err.response?.data?.message || "Login failed")` — shows error in UI
 - `Billing.jsx`: `console.error(...)` + `alert(...)` for order creation failure
 - `Orders.jsx`: `console.error(...)` only — silent failures (user sees nothing if mark-paid fails)
 - `Dashboard.jsx`: `console.error(...)` + state remains null → shows "Failed to load dashboard data."
 
 ### Key Missing Error Handling:
+
 - No 401 interceptor in `api.js` — if token expires mid-session, API calls fail silently. The user would need to manually navigate back to login. A proper implementation would add an Axios response interceptor that redirects to `/login` on 401.
 - No retry logic anywhere
 - No user-facing error for failed mark-paid/undo operations in Orders page
@@ -1939,24 +2092,29 @@ app.use("/api", limiter);
 ## Actual Deployment (Verified from Code)
 
 ### Frontend: Vercel
+
 **URL:** `https://snack-track-theta.vercel.app`
 **Evidence:** Hardcoded in `app.js` CORS allowlist
 **Config:** `vercel.json` with SPA rewrite rule:
+
 ```json
 { "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
 ```
+
 **Purpose:** Without this, refreshing any non-root URL (e.g., `/billing`) on Vercel would return 404 because Vercel looks for an actual `/billing.html` file. The rewrite sends all routes to `index.html`, letting React Router handle routing.
 
 **Build command:** `npm run build` (Vite build)
 **Output:** Static files in `frontend/dist/` directory
 
 ### Backend: Render
+
 **URL:** `https://snacktrack-backend-y8nw.onrender.com`
 **Evidence:** Hardcoded in `frontend/src/api/api.js` baseURL
 **Start command:** `node server.js`
 **Dev command:** `nodemon server.js`
 
 ### Database: MongoDB Atlas
+
 **URI:** `mongodb+srv://SnackTrack:POS123@cluster0.ur4i6pw.mongodb.net/snacktrack`
 **Evidence:** In `backend/.env` file
 **Note:** Credentials are present in the `.env` file. The `.gitignore` should prevent this from being committed.
@@ -1994,18 +2152,19 @@ MongoDB Atlas (cluster0.ur4i6pw.mongodb.net)
 
 ## Development vs Production
 
-| Aspect | Development | Production |
-|--------|-------------|------------|
-| Frontend URL | `http://localhost:5173` | `https://snack-track-theta.vercel.app` |
-| Backend URL | `http://localhost:5000` | `https://snacktrack-backend-y8nw.onrender.com` |
-| API baseURL | Hardcoded to Render URL | Same (api.js has no env-based URL) |
-| Database | Same MongoDB Atlas cluster | Same cluster |
-| Env vars | `.env` file | Platform environment variables |
-| Run command | `nodemon server.js` | `node server.js` |
+| Aspect       | Development                | Production                                     |
+| ------------ | -------------------------- | ---------------------------------------------- |
+| Frontend URL | `http://localhost:5173`    | `https://snack-track-theta.vercel.app`         |
+| Backend URL  | `http://localhost:5000`    | `https://snacktrack-backend-y8nw.onrender.com` |
+| API baseURL  | Hardcoded to Render URL    | Same (api.js has no env-based URL)             |
+| Database     | Same MongoDB Atlas cluster | Same cluster                                   |
+| Env vars     | `.env` file                | Platform environment variables                 |
+| Run command  | `nodemon server.js`        | `node server.js`                               |
 
 **Inconsistency:** The frontend's `api.js` has a hardcoded production URL (`https://snacktrack-backend-y8nw.onrender.com/api`). For local development, engineers would need to change this URL or configure a local proxy. A better approach is `import.meta.env.VITE_API_URL` with `.env.local` for development.
 
 ## Cold Starts (Render Free Tier)
+
 Render's free tier spins down after 15 minutes of inactivity. The first request after inactivity triggers a cold start (~30 seconds delay). This is relevant for the demo deployment. Production would use a paid plan with always-on instances.
 
 ---
@@ -2017,16 +2176,19 @@ Render's free tier spins down after 15 minutes of inactivity. The first request 
 **No `.github/workflows/` directory exists** in the SnackTrack repository root. There are `.github` directories in `node_modules` (from third-party packages), but no GitHub Actions workflow files authored for this project.
 
 **Deployment is platform-level auto-deployment**, not a custom CI/CD pipeline:
+
 - Vercel connects to the GitHub repository and auto-deploys on every push to `main`
 - Render connects to the GitHub repository and auto-deploys on every push to `main`
 
 ## Verdict: PARTIALLY VERIFIED
 
 **What exists:**
+
 - Auto-deployment on push to `main` branch (standard Vercel/Render GitHub integration)
 - No manual deployment steps required after push
 
 **What does NOT exist:**
+
 - No automated tests
 - No GitHub Actions workflows
 - No pre-deployment build verification
@@ -2302,18 +2464,22 @@ No. CORS is a browser policy — it prevents other websites' JavaScript from rea
 
 **Q29: How would you make order creation transactional if you added inventory?**
 "MongoDB supports multi-document transactions on replica sets (which Atlas provides). I'd wrap the inventory decrement and order creation in a session:
+
 ```javascript
 const session = await mongoose.startSession();
 session.startTransaction();
 try {
-    await Order.create([orderData], { session });
-    await Inventory.updateMany([decrements], { session });
-    await session.commitTransaction();
-} catch(err) {
-    await session.abortTransaction();
-    throw err;
-} finally { session.endSession(); }
+  await Order.create([orderData], { session });
+  await Inventory.updateMany([decrements], { session });
+  await session.commitTransaction();
+} catch (err) {
+  await session.abortTransaction();
+  throw err;
+} finally {
+  session.endSession();
+}
 ```
+
 If either operation fails, the transaction rolls back, maintaining consistency."
 
 **Q30: How would you scale the Telegram job reliably?**
@@ -2334,21 +2500,25 @@ If either operation fails, the transaction rolls back, maintaining consistency."
 **Interviewer:** "Tell me about SnackTrack."
 
 ### Weak Answer:
+
 "It's a POS system I built using the MERN stack. Users can create orders, track payments, and view analytics."
 
 ### Good Answer:
+
 "SnackTrack is a full-stack POS and analytics system for small Indian snack stalls — the kind of food counter that currently has no way to track what they're selling. I built the complete system: a billing interface where staff create orders, an orders page to manage payment status, and an owner-only analytics dashboard showing daily and monthly earnings, top-selling items, peak hours, and revenue trends. The system also has a Telegram bot that sends the owner a nightly sales summary at 10 PM automatically."
 
 ### Excellent Answer:
+
 "SnackTrack is a full-stack POS system I built for small food stalls. The real-world problem it solves is that small food businesses — a samosa stall, a tea counter — have absolutely no data visibility. They make cash transactions all day and have no idea which item sells the most, when their rush hour is, or how their revenue compares week to week. I digitized the entire order lifecycle: staff create bills from a grid of 7 menu items, those orders go to MongoDB, and the owner gets a real-time analytics dashboard with Recharts visualizations covering earnings trends, top sellers, peak business hours, and a paid-vs-pending payment status breakdown. I also built an automated Telegram reporting system — a node-cron job fires at 10 PM IST every night, queries the day's sales, and sends the owner a formatted summary directly to their phone. Technically, I implemented JWT authentication with a two-layer middleware pattern for authentication and role-based access control, bcrypt password hashing, and API security with Helmet, rate limiting, and CORS. The frontend is React 19 on Vercel, the backend is Express on Render, and the database is MongoDB Atlas."
 
 ---
 
 **Interviewer:** "Walk me through exactly what happens when a staff member creates a bill."
 
-*(Pause, don't rush)*
+_(Pause, don't rush)_
 
 ### Excellent Answer:
+
 "Sure. The staff is on the Billing page. They see 7 snack items rendered from a hardcoded array in `snacks.js`. Each item has a number input. As the staff enters quantities, React state in `Billing.jsx` updates a `quantities` object — keys are snack IDs, values are quantities. The subtotal is computed on every render using a `reduce` over the snacks array. `BillSummary` displays the subtotal plus a 5% tax and a total. When the staff clicks 'Create Order', the `handleCreateOrder` function builds an `orderItems` array — filtering items with qty > 0, mapping each to `{ name, qty, price, total }`. Then it calls `API.post('/orders', { items: orderItems, totalAmount: subtotal })`.
 
 The Axios request interceptor automatically attaches the JWT from localStorage. On the backend, Express runs the CORS, Helmet, and rate limiter middleware first. Then the request hits the order route, where `protect` extracts the JWT from the Authorization header, verifies it with `jwt.verify()`, fetches the user from MongoDB excluding password, and attaches it to `req.user`. Then `authorize('owner', 'staff')` confirms both roles can create orders.
@@ -2362,6 +2532,7 @@ One thing I should point out: the `BillSummary` shows the total with 5% tax, but
 **Interviewer:** "You said you have role-based access. How exactly does it work? And can a staff member bypass it?"
 
 ### Excellent Answer:
+
 "The system has two layers. The first is `protect` middleware — it verifies who the user is by checking the JWT. The second is `authorize` middleware — it checks what that user is allowed to do.
 
 `authorize` is a higher-order function. When I write `authorize('owner')` on the dashboard route, it creates middleware that checks if `req.user.role` is in the `['owner']` array. If a staff member's role is `'staff'`, it returns 403.
@@ -2375,6 +2546,7 @@ The role is stored in the `User` document in MongoDB. It's NOT in the JWT payloa
 **Interviewer:** "Your analytics fetch all orders from MongoDB. What happens with 100,000 orders?"
 
 ### Excellent Answer:
+
 "That would be a serious performance problem. The current implementation calls `Order.find()` with no filter, loading all 100,000 documents into Node.js memory. At maybe 1-2KB per order document, that's 100-200MB of data transferred from MongoDB to Node.js. The computation would be slow, memory pressure could crash the server, and every dashboard page load would be expensive.
 
 The correct solution is MongoDB Aggregation Pipelines. Instead of transferring all data to Node.js, I'd push the filtering and grouping into the database engine. For top-selling snacks, the pipeline would be: `$match: { paymentDone: true }` to filter in the database, `$unwind: '$items'` to flatten the items array, `$group: { _id: '$items.name', totalQty: { $sum: '$items.qty' } }` to aggregate by item name, `$sort: { totalQty: -1 }`, `$limit: 6`. Only 6 records would come back over the wire.
@@ -2390,6 +2562,7 @@ I acknowledge this is a real scalability limitation in the current implementatio
 **Interviewer:** "Your Telegram job uses node-cron. What happens if the server is down at 10 PM?"
 
 ### Excellent Answer:
+
 "The message is lost. That's a real limitation of in-process scheduling. `node-cron` runs inside the same Node.js process as the web server. If Render restarts the server for a deployment at 9:58 PM, or if the free-tier server spins down due to inactivity, the 10 PM trigger never fires.
 
 The production fix is to use an external scheduler. Options: Render has a built-in 'Cron Job' service type — a separate process that runs on a schedule, completely independent of the web server. AWS EventBridge can trigger a Lambda function at any cron schedule. These run regardless of whether my API server is up.
@@ -2403,6 +2576,7 @@ The nodemon guard in my current code — the `global.dailySummaryJobStarted` che
 **Interviewer:** "What are the biggest weaknesses in SnackTrack?"
 
 ### Excellent Answer:
+
 "I'll be honest about the main ones.
 
 First, the product catalog is hardcoded. The menu is a JavaScript file, not a database model. Adding an item or changing a price requires a code change and redeployment. A real POS needs a Products collection with an admin interface.
@@ -2462,6 +2636,7 @@ b6c4d54  Added demo images
 ```
 
 **What can be honestly claimed:**
+
 - Designed and built the entire application from scratch as a solo project
 - Built in iterative phases: frontend UI first → backend API → integration → security → deployment
 - Made real debugging decisions (e.g., CORS ordering bug fixed in commit `c7c87a6`)
@@ -2628,7 +2803,7 @@ I should mention the honest limitations: the menu is hardcoded (not database-dri
 React SPA (Vercel) → HTTPS → Express API (Render) → Mongoose → MongoDB Atlas
      ↑ JWT in localStorage         ↑ protect + authorize middleware
      ↑ Axios interceptor            ↑ CORS + Helmet + Rate Limit
-     
+
 4 Pages:                        3 Route Groups:
 - Login                         - /api/auth (login only)
 - Billing (local cart state)    - /api/orders (CRUD, both roles)
@@ -2828,49 +3003,49 @@ Owner receives Telegram notification
 
 ## M. Top 10 Challenges and Improvements
 
-| # | Challenge/Limitation | Improvement |
-|---|---------------------|-------------|
-| 1 | Hardcoded menu | Products collection + admin UI |
-| 2 | Backend trusts frontend prices | Server-side price validation |
-| 3 | `Order.find()` doesn't scale | MongoDB Aggregation Pipelines |
-| 4 | In-process cron lost if server down | External scheduler |
-| 5 | JWT in localStorage (XSS risk) | HttpOnly cookies + refresh tokens |
-| 6 | No token revocation | Redis blacklist |
-| 7 | Tax shown but not stored | Consistent tax handling |
-| 8 | Delete not scoped to creator | Creator-scoped deletion |
-| 9 | No 401 redirect on token expiry | Axios response interceptor |
-| 10 | No input validation library | express-validator on all routes |
+| #   | Challenge/Limitation                | Improvement                       |
+| --- | ----------------------------------- | --------------------------------- |
+| 1   | Hardcoded menu                      | Products collection + admin UI    |
+| 2   | Backend trusts frontend prices      | Server-side price validation      |
+| 3   | `Order.find()` doesn't scale        | MongoDB Aggregation Pipelines     |
+| 4   | In-process cron lost if server down | External scheduler                |
+| 5   | JWT in localStorage (XSS risk)      | HttpOnly cookies + refresh tokens |
+| 6   | No token revocation                 | Redis blacklist                   |
+| 7   | Tax shown but not stored            | Consistent tax handling           |
+| 8   | Delete not scoped to creator        | Creator-scoped deletion           |
+| 9   | No 401 redirect on token expiry     | Axios response interceptor        |
+| 10  | No input validation library         | express-validator on all routes   |
 
 ---
 
 # 30. IMPLEMENTATION VERIFICATION REPORT
 
-| Feature / Resume Claim | Status | Evidence | Important Files |
-|------------------------|--------|----------|-----------------|
-| POS / Billing system | ✅ VERIFIED | Staff billing UI with local cart, snack grid, order creation | `Billing.jsx`, `SnackCard.jsx`, `orderController.js` |
-| Order management | ✅ VERIFIED | Create, list, mark paid, undo, delete — all implemented | `orderController.js`, `orderRoutes.js`, `Orders.jsx` |
-| Payment tracking | ✅ VERIFIED (clarification needed) | `paymentDone` boolean toggle, NOT a payment gateway | `Order.js`, `orderController.js` |
-| JWT authentication | ✅ VERIFIED | `jwt.sign` + `jwt.verify`, 7-day expiry, Bearer token | `generateToken.js`, `authMiddleware.js` |
-| Role-based access (owner/staff) | ✅ VERIFIED | `authorize()` middleware, enum in User schema, route matrix | `roleMiddleware.js`, `User.js`, all route files |
-| Owner role | ✅ VERIFIED | Dashboard access, `role: "owner"` in enum | `dashboardRoutes.js`, `User.js` |
-| Staff role | ✅ VERIFIED | Billing + Orders only, `role: "staff"` default | `roleMiddleware.js`, `Navbar.jsx` |
-| Analytics dashboard | ✅ VERIFIED | 6 chart types, 5 stat metrics, owner-only | `Dashboard.jsx`, `dashboardController.js` |
-| Revenue trends | ✅ VERIFIED | Last 7 days BarChart, monthly earnings stat | `dashboardController.js` (`last7Days`, `monthlyEarnings`) |
-| Top-selling items | ✅ VERIFIED | Top 6 snacks by quantity, donut PieChart | `dashboardController.js` (`topSnacks`), `Dashboard.jsx` |
-| Telegram bot automation | ✅ VERIFIED | node-cron + axios HTTP to Telegram Bot API | `daily_summary_job.js`, `telegram_service.js` |
-| Daily sales summary | ✅ VERIFIED | 10 PM IST cron, earnings/paid/pending/topSnack message | `daily_summary_job.js`, `dashboard_summary_service.js` |
-| Helmet | ✅ VERIFIED | `app.use(helmet({ crossOriginResourcePolicy: false }))` | `app.js` |
-| CORS | ✅ VERIFIED | `app.use(cors({ origin: [...], credentials: true }))` | `app.js` |
-| Rate limiting | ✅ VERIFIED | 100 req/15min per IP on all `/api` routes | `app.js` |
-| Frontend deployment (Vercel) | ✅ VERIFIED | `vercel.json`, CORS allows Vercel URL | `vercel.json`, `app.js` |
-| Backend deployment (Render) | ✅ VERIFIED | `api.js` baseURL is Render URL, `start: "node server.js"` | `api.js`, `package.json` |
-| CI/CD pipeline | ⚠️ PARTIALLY VERIFIED | Auto-deploy on push via Vercel/Render platform integration. No GitHub Actions workflows or automated tests. | `vercel.json`, Render dashboard |
-| Real-time order updates | ❌ NOT VERIFIED | Uses fetch-on-action pattern, no WebSockets/polling | `Orders.jsx` |
-| Payment gateway integration | ❌ NOT VERIFIED | No Razorpay/Stripe/UPI — manual boolean toggle only | `Order.js`, `orderController.js` |
-| Product/inventory management | ❌ NOT VERIFIED | No product database, no inventory model — hardcoded menu | `snacks.js` |
-| User registration | ❌ NOT VERIFIED | Registration endpoint commented out intentionally | `authController.js`, `authRoutes.js` |
-| MongoDB aggregation pipelines | ❌ NOT VERIFIED | Analytics use JS array methods, not `$aggregate` | `dashboardController.js` |
-| Input validation library | ❌ NOT VERIFIED | Manual checks only, no express-validator or joi | `authController.js`, `orderController.js` |
+| Feature / Resume Claim          | Status                             | Evidence                                                                                                    | Important Files                                           |
+| ------------------------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| POS / Billing system            | ✅ VERIFIED                        | Staff billing UI with local cart, snack grid, order creation                                                | `Billing.jsx`, `SnackCard.jsx`, `orderController.js`      |
+| Order management                | ✅ VERIFIED                        | Create, list, mark paid, undo, delete — all implemented                                                     | `orderController.js`, `orderRoutes.js`, `Orders.jsx`      |
+| Payment tracking                | ✅ VERIFIED (clarification needed) | `paymentDone` boolean toggle, NOT a payment gateway                                                         | `Order.js`, `orderController.js`                          |
+| JWT authentication              | ✅ VERIFIED                        | `jwt.sign` + `jwt.verify`, 7-day expiry, Bearer token                                                       | `generateToken.js`, `authMiddleware.js`                   |
+| Role-based access (owner/staff) | ✅ VERIFIED                        | `authorize()` middleware, enum in User schema, route matrix                                                 | `roleMiddleware.js`, `User.js`, all route files           |
+| Owner role                      | ✅ VERIFIED                        | Dashboard access, `role: "owner"` in enum                                                                   | `dashboardRoutes.js`, `User.js`                           |
+| Staff role                      | ✅ VERIFIED                        | Billing + Orders only, `role: "staff"` default                                                              | `roleMiddleware.js`, `Navbar.jsx`                         |
+| Analytics dashboard             | ✅ VERIFIED                        | 6 chart types, 5 stat metrics, owner-only                                                                   | `Dashboard.jsx`, `dashboardController.js`                 |
+| Revenue trends                  | ✅ VERIFIED                        | Last 7 days BarChart, monthly earnings stat                                                                 | `dashboardController.js` (`last7Days`, `monthlyEarnings`) |
+| Top-selling items               | ✅ VERIFIED                        | Top 6 snacks by quantity, donut PieChart                                                                    | `dashboardController.js` (`topSnacks`), `Dashboard.jsx`   |
+| Telegram bot automation         | ✅ VERIFIED                        | node-cron + axios HTTP to Telegram Bot API                                                                  | `daily_summary_job.js`, `telegram_service.js`             |
+| Daily sales summary             | ✅ VERIFIED                        | 10 PM IST cron, earnings/paid/pending/topSnack message                                                      | `daily_summary_job.js`, `dashboard_summary_service.js`    |
+| Helmet                          | ✅ VERIFIED                        | `app.use(helmet({ crossOriginResourcePolicy: false }))`                                                     | `app.js`                                                  |
+| CORS                            | ✅ VERIFIED                        | `app.use(cors({ origin: [...], credentials: true }))`                                                       | `app.js`                                                  |
+| Rate limiting                   | ✅ VERIFIED                        | 100 req/15min per IP on all `/api` routes                                                                   | `app.js`                                                  |
+| Frontend deployment (Vercel)    | ✅ VERIFIED                        | `vercel.json`, CORS allows Vercel URL                                                                       | `vercel.json`, `app.js`                                   |
+| Backend deployment (Render)     | ✅ VERIFIED                        | `api.js` baseURL is Render URL, `start: "node server.js"`                                                   | `api.js`, `package.json`                                  |
+| CI/CD pipeline                  | ⚠️ PARTIALLY VERIFIED              | Auto-deploy on push via Vercel/Render platform integration. No GitHub Actions workflows or automated tests. | `vercel.json`, Render dashboard                           |
+| Real-time order updates         | ❌ NOT VERIFIED                    | Uses fetch-on-action pattern, no WebSockets/polling                                                         | `Orders.jsx`                                              |
+| Payment gateway integration     | ❌ NOT VERIFIED                    | No Razorpay/Stripe/UPI — manual boolean toggle only                                                         | `Order.js`, `orderController.js`                          |
+| Product/inventory management    | ❌ NOT VERIFIED                    | No product database, no inventory model — hardcoded menu                                                    | `snacks.js`                                               |
+| User registration               | ❌ NOT VERIFIED                    | Registration endpoint commented out intentionally                                                           | `authController.js`, `authRoutes.js`                      |
+| MongoDB aggregation pipelines   | ❌ NOT VERIFIED                    | Analytics use JS array methods, not `$aggregate`                                                            | `dashboardController.js`                                  |
+| Input validation library        | ❌ NOT VERIFIED                    | Manual checks only, no express-validator or joi                                                             | `authController.js`, `orderController.js`                 |
 
 ---
 
