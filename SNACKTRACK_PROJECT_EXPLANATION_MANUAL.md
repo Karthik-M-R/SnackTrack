@@ -2108,16 +2108,13 @@ app.use("/api", limiter);
 
 ### Backend: Render
 
-**URL:** `https://snacktrack-backend-y8nw.onrender.com`
-**Evidence:** Hardcoded in `frontend/src/api/api.js` baseURL
-**Start command:** `node server.js`
-**Dev command:** `nodemon server.js`
+**URL:** ``**Evidence:** Hardcoded in`frontend/src/api/api.js`baseURL
+**Start command:**`node server.js`**Dev command:**`nodemon server.js`
 
 ### Database: MongoDB Atlas
 
-**URI:** `mongodb+srv://SnackTrack:POS123@cluster0.ur4i6pw.mongodb.net/snacktrack`
-**Evidence:** In `backend/.env` file
-**Note:** Credentials are present in the `.env` file. The `.gitignore` should prevent this from being committed.
+**URI:** ``**Evidence:** In`backend/.env`file
+**Note:** Credentials are present in the`.env`file. The`.gitignore` should prevent this from being committed.
 
 ## Deployment Architecture Diagram
 
