@@ -38,15 +38,14 @@ app.use(helmet({
     crossOriginResourcePolicy: false
 }));
 
-// 3. Rate Limiting: Prevent brute-force attacks
-const limiter = rateLimit({
+// 3. Login rate limiting: Prevent brute-force attacks
+const loginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
-    message: "Too many requests from this IP, please try again after 15 minutes",
+    max: 5, // allow 5 login attempts per IP
+    message: "Too many login attempts. Please try again after 15 minutes.",
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
-app.use("/api", limiter); // Apply to all API routes
 
 app.use(express.json());
 
@@ -82,6 +81,7 @@ app.get("/", (req, res) => {
 //     }
 // });
 
+app.use("/api/auth/login", loginLimiter);
 app.use("/api/auth", authRoutes);
 
 // app.get("/protected-test", protect, (req, res) => {
