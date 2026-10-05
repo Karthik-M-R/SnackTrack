@@ -40,11 +40,22 @@ app.use(helmet({
 
 // 3. Login rate limiting: Prevent brute-force attacks
 const loginLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // allow 5 login attempts per IP
-    message: "Too many login attempts. Please try again after 15 minutes.",
+    windowMs: 15 * 1000, // 15 seconds
+    max: 5, // allow 5 failed login attempts per IP in 15 seconds
+    skipSuccessfulRequests: true, // only count failed attempts
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    handler: (req, res, _next, options) => {
+        const resetTime = req.rateLimit?.resetTime;
+        const retryAfterSeconds = resetTime
+            ? Math.max(1, Math.ceil((resetTime.getTime() - Date.now()) / 1000))
+            : 15;
+
+        return res.status(options.statusCode).json({
+            message: `Too many requests. Please try again after ${retryAfterSeconds} seconds.`,
+            retryAfterSeconds
+        });
+    }
 });
 
 app.use(express.json());

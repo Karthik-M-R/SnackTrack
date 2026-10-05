@@ -33,9 +33,17 @@ function Login() {
             }
 
         } catch (err) {
-            setError(
-                err.response?.data?.message || "Login failed"
-            );
+            if (err.response?.status === 429) {
+                const retryAfterSeconds = err.response?.data?.retryAfterSeconds;
+                const fallbackMessage = retryAfterSeconds
+                    ? `Too many requests. Please try again after ${retryAfterSeconds} seconds.`
+                    : "Too many requests. Please try again after 15 seconds.";
+                setError(err.response?.data?.message || fallbackMessage);
+            } else {
+                setError(
+                    err.response?.data?.message || "Login failed"
+                );
+            }
         } finally {
             setIsLoading(false);
         }
